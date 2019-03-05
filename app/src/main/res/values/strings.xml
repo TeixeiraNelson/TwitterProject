@@ -9,4 +9,17 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="title_activity_new_tweet">NewTweet</string>
+
+
+    <!-- Inscription strings -->
+    <string name="inscr_next">Next</string>
+    <string name="inscr_password">Password</string>
+    <string name="inscr_password2">Type the password again</string>
+    <string name="inscr_nickname">Nickname</string>
+    <string name="email">E-mail</string>
+    <string name="login">Login</string>
+    <string name="nickname">Nickname</string>
+    <string name="terms">Terms of use</string>
+
+
 </resources>
