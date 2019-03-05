@@ -15,27 +15,41 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 public class Menu extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, android.view.Menu {
 
+    private ListView mListView;
+    public ArrayList<String> list;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Initialisation de la page menu
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //Si on clique sur le bouton ron d en bas ca lance l'activité qui permet d'envoyer un nouveau tweet
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              /*  Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
                 Intent intentMyAccount = new Intent(view.getContext(), Tweet.class);
                 startActivity(intentMyAccount);
             }
         });
+
+        //Crée une liste des tweets
+        mListView = (ListView) findViewById(R.id.listViewTweet);
+        list = new ArrayList<>();
+        list.add("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam commodo consequat sapien, id venenatis mi varius a. Sed auctor nulla vitae libero sagittis fringilla. Ut scelerisque consequat sem metus.");
+        list.add("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam commodo consequat sapien, id venenatis mi varius a. Sed auctor nulla vitae libero sagittis fringilla. Ut scelerisque consequat sem metus.");
+        mListView.setAdapter(new ArrayAdapter<String>(this,R.layout.one_tweet,list));
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
