@@ -4,15 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".SettingsActivity"
-    tools:showIn="@layout/activity_settings">
+    tools:context=".EditSettingsActivity">
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="55dp"
+        android:layout_marginTop="28dp"
         android:text="Modify your settings"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,10 +22,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="52dp"
-        android:layout_marginTop="151dp"
+        android:layout_marginTop="31dp"
         android:text="Username"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <EditText
         android:id="@+id/txtEmail"
@@ -36,18 +34,18 @@
         android:layout_marginTop="30dp"
         android:ems="10"
         android:inputType="textEmailAddress"
-        android:text="Email"
+        android:hint="Email"
         app:layout_constraintStart_toStartOf="@+id/txtUsername"
         app:layout_constraintTop_toBottomOf="@+id/txtUsername" />
 
     <Button
         android:id="@+id/btnChangeEmail"
-        android:layout_width="158dp"
+        android:layout_width="157dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="52dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="55dp"
-        android:text="Change Email"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="56dp"
+        android:hint="Change Email"
         app:layout_constraintEnd_toEndOf="@+id/txtEmail"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtEmail" />
@@ -56,9 +54,11 @@
         android:id="@+id/txtOldPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="34dp"
+        android:layout_marginTop="38dp"
         android:ems="10"
         android:inputType="textPassword"
+        android:hint="Actual password"
+        app:layout_constraintEnd_toEndOf="@+id/txtEmail"
         app:layout_constraintStart_toStartOf="@+id/btnChangeEmail"
         app:layout_constraintTop_toBottomOf="@+id/btnChangeEmail" />
 
@@ -69,6 +69,7 @@
         android:layout_marginTop="31dp"
         android:ems="10"
         android:inputType="textPassword"
+        android:hint="New Password"
         app:layout_constraintStart_toStartOf="@+id/txtOldPassword"
         app:layout_constraintTop_toBottomOf="@+id/txtOldPassword" />
 
@@ -76,18 +77,20 @@
         android:id="@+id/txtNewPassword2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="28dp"
         android:ems="10"
         android:inputType="textPassword"
-        app:layout_constraintStart_toStartOf="@+id/txtNewPassword"
+        android:hint="Retry new passwords"
+        app:layout_constraintStart_toStartOf="@+id/txtOldPassword"
         app:layout_constraintTop_toBottomOf="@+id/txtNewPassword" />
 
     <Button
         android:id="@+id/btnChangePassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="23dp"
+        android:layout_marginTop="36dp"
         android:text="Change password"
         app:layout_constraintStart_toStartOf="@+id/txtNewPassword2"
         app:layout_constraintTop_toBottomOf="@+id/txtNewPassword2" />
+
 </android.support.constraint.ConstraintLayout>

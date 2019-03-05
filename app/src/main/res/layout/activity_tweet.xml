@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".NewTweet"
-    tools:showIn="@layout/activity_new_tweet">
+    tools:context=".Tweet">
 
     <TextView
         android:id="@+id/textView4"
@@ -42,7 +40,7 @@
         android:layout_marginBottom="135dp"
         android:ems="10"
         android:inputType="textMultiLine"
-        android:text="Tweet"
+        android:hint="Tweet"
         app:layout_constraintBottom_toTopOf="@+id/btnSendTweet"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -56,7 +54,7 @@
         android:layout_marginBottom="360dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Hashtag"
+        android:hint="Hashtag"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtTweet" />

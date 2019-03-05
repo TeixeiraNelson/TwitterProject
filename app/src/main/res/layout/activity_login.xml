@@ -23,7 +23,8 @@
         android:layout_marginTop="143dp"
         android:ems="10"
         android:inputType="textEmailAddress"
-        android:text="Entrer you email"
+        android:text="test"
+        android:hint="Email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -35,7 +36,8 @@
         android:layout_marginTop="67dp"
         android:ems="10"
         android:inputType="textPassword"
-        android:text="Enter your password"
+        android:hint="Password"
+        android:text="test"
         app:layout_constraintStart_toStartOf="@+id/txtEmail"
         app:layout_constraintTop_toBottomOf="@+id/txtEmail" />
 
@@ -46,6 +48,7 @@
         android:layout_marginEnd="71dp"
         android:layout_marginBottom="60dp"
         android:text="Subscription"
+        android:textColor="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 </android.support.constraint.ConstraintLayout>

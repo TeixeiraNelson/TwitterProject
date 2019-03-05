@@ -26,7 +26,7 @@
         android:layout_marginBottom="59dp"
         android:ems="10"
         android:inputType="textEmailAddress"
-        android:text="Email"
+        android:hint="Enter your email"
         app:layout_constraintBottom_toTopOf="@+id/txtPasswordSub"
         app:layout_constraintEnd_toEndOf="@+id/txtPasswordSub" />
 
@@ -38,6 +38,7 @@
         android:layout_marginBottom="54dp"
         android:ems="10"
         android:inputType="textPassword"
+        android:hint="Password"
         app:layout_constraintBottom_toTopOf="@+id/txtPassword2Sub"
         app:layout_constraintStart_toStartOf="@+id/txtPassword2Sub" />
 
@@ -48,6 +49,7 @@
         android:layout_marginBottom="312dp"
         android:ems="10"
         android:inputType="textPassword"
+        android:hint="Retry password"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -59,7 +61,7 @@
         android:layout_marginTop="52dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Pseudo"
+        android:hint="Pseudo"
         app:layout_constraintStart_toStartOf="@+id/txtPassword2Sub"
         app:layout_constraintTop_toBottomOf="@+id/txtPassword2Sub" />
 
