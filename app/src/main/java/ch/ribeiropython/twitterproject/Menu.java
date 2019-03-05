@@ -34,7 +34,7 @@ public class Menu extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //Si on clique sur le bouton rond en bas ca lance l'activité qui permet d'envoyer un nouveau tweet
+        //Si on clique sur le bouton ron d en bas ca lance l'activité qui permet d'envoyer un nouveau tweet
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
