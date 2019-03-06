@@ -49,7 +49,7 @@ public class Menu extends AppCompatActivity
         list = new ArrayList<>();
         list.add("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam commodo consequat sapien, id venenatis mi varius a. Sed auctor nulla vitae libero sagittis fringilla. Ut scelerisque consequat sem metus.");
         list.add("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam commodo consequat sapien, id venenatis mi varius a. Sed auctor nulla vitae libero sagittis fringilla. Ut scelerisque consequat sem metus.");
-        mListView.setAdapter(new ArrayAdapter<String>(this,R.layout.one_tweet,list));
+       // mListView.setAdapter(new ArrayAdapter<String>(this,R.layout.one_tweet,list));
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
