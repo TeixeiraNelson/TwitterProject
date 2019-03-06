@@ -3,7 +3,12 @@ package ch.ribeiropython.twitterproject;
 import android.content.Context;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,32 +16,31 @@ import java.util.List;
 public class oneTweetAdapter extends ArrayAdapter<oneTweet> {
 
     private Context mContext;
-    private List<oneTweet> moviesList = new ArrayList<>();
+    private List<oneTweet> tweetList = new ArrayList<>();
 
-    public oneTweetAdapter(@NonNull Context context, @LayoutRes ArrayList<oneTweet> list) {
+    public oneTweetAdapter(@NonNull Context context, ArrayList<oneTweet> list) {
         super(context, 0 , list);
         mContext = context;
-        moviesList = list;
+        tweetList = list;
     }
-/*
+
     @NonNull
-    @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View listItem = convertView;
         if(listItem == null)
-            listItem = LayoutInflater.from(mContext).inflate(R.layout.list_item,parent,false);
+            listItem = LayoutInflater.from(mContext).inflate(R.layout.tweet,parent,false);
 
-        Movie currentMovie = moviesList.get(position);
+        oneTweet currentMovie = tweetList.get(position);
 
-        ImageView image = (ImageView)listItem.findViewById(R.id.imageView_poster);
-        image.setImageResource(currentMovie.getmImageDrawable());
+        TextView pseudo = (TextView) listItem.findViewById(R.id.textView_pseudo);
+        pseudo.setText(currentMovie.getPseudo());
 
-        TextView name = (TextView) listItem.findViewById(R.id.textView_name);
-        name.setText(currentMovie.getmName());
+        TextView tweet = (TextView) listItem.findViewById(R.id.textView_tweet);
+        tweet.setText(currentMovie.getTweet());
 
-        TextView release = (TextView) listItem.findViewById(R.id.textView_release);
-        release.setText(currentMovie.getmRelease());
+        TextView hashtag = (TextView) listItem.findViewById(R.id.textView_hashtag);
+        hashtag.setText(currentMovie.getHashtag());
 
         return listItem;
-    }*/
+    }
 }

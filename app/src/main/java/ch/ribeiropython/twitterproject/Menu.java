@@ -23,18 +23,30 @@ import java.util.ArrayList;
 public class Menu extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, android.view.Menu {
 
-    private ListView mListView;
-    public ArrayList<String> list;
+    private ListView listViewTweet;
+    private oneTweetAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Initialisation de la page menu
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
+        //Récupère les tweets et les affiches dans le listview
+        listViewTweet = (ListView) findViewById(R.id.listViewTweet);
+        ArrayList<oneTweet> tweetsList = new ArrayList<>();
+        tweetsList.add(new oneTweet("Test pseudo 1", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat." , "#2013 #mateub"));
+        tweetsList.add(new oneTweet("Gafundi", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat." , "#salouti #heyheyhey"));
+        tweetsList.add(new oneTweet("nolsen", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat." , "#jeviensjamaisencours #acausedemamaindroite"));
+
+        mAdapter = new oneTweetAdapter(this,tweetsList);
+        listViewTweet.setAdapter(mAdapter);
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //Si on clique sur le bouton ron d en bas ca lance l'activité qui permet d'envoyer un nouveau tweet
+        //Si on clique sur le bouton rond en bas ca lance l'activité qui permet d'envoyer un nouveau tweet
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,13 +55,6 @@ public class Menu extends AppCompatActivity
                 startActivity(intentMyAccount);
             }
         });
-
-        //Crée une liste des tweets
-        mListView = (ListView) findViewById(R.id.listViewTweet);
-        list = new ArrayList<>();
-        list.add("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam commodo consequat sapien, id venenatis mi varius a. Sed auctor nulla vitae libero sagittis fringilla. Ut scelerisque consequat sem metus.");
-        list.add("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam commodo consequat sapien, id venenatis mi varius a. Sed auctor nulla vitae libero sagittis fringilla. Ut scelerisque consequat sem metus.");
-       // mListView.setAdapter(new ArrayAdapter<String>(this,R.layout.one_tweet,list));
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
