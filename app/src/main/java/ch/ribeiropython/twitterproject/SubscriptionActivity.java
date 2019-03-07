@@ -35,7 +35,7 @@ public class SubscriptionActivity extends AppCompatActivity {
 
         if(verifyEmailSyntax(userEmail)){
             if(verifyPasswords(userPassword, userPassword2)){
-
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.valid_info), Toast.LENGTH_SHORT ).show();
                 User user = new User();
                 user.email = userEmail;
                 user.password = userPassword;
@@ -45,7 +45,7 @@ public class SubscriptionActivity extends AppCompatActivity {
                 finish();
             }
         } else {
-            Toast.makeText(this, getResources().getString(R.string.invalid_email_syntax), Toast.LENGTH_SHORT );
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.invalid_email_syntax), Toast.LENGTH_SHORT ).show();
         }
 
 
@@ -66,11 +66,11 @@ public class SubscriptionActivity extends AppCompatActivity {
             if(password.length()>=6){
                 return true;
             } else {
-                Toast.makeText(this, getResources().getString(R.string.invalid_passwd_length), Toast.LENGTH_SHORT );
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.invalid_passwd_length), Toast.LENGTH_SHORT ).show();
                 return false;
             }
         } else {
-            Toast.makeText(this, getResources().getString(R.string.invalid_passwd_match), Toast.LENGTH_SHORT );
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.invalid_passwd_match), Toast.LENGTH_SHORT ).show();
             return false;
         }
 
