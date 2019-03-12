@@ -19,4 +19,25 @@ public class UserEntity {
     @ColumnInfo (name="nickname")
     private String nickname;
 
+    public UserEntity(String email, String pass, String nickname) {
+        this.email = email;
+        this.pass = pass;
+        this.nickname = nickname;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPass() {
+        return pass;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
 }
