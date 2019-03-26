@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey;
 public class UserEntity {
 
     @PrimaryKey (autoGenerate = true)
-    private Long id;
+    private int id;
 
     @ColumnInfo (name="email")
     private String email;
@@ -25,7 +25,7 @@ public class UserEntity {
         this.nickname = nickname;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
@@ -39,5 +39,21 @@ public class UserEntity {
 
     public String getNickname() {
         return nickname;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 }

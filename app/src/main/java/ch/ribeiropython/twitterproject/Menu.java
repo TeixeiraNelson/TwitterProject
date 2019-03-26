@@ -21,18 +21,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.lifecycle.ViewModelProviders;
 import ch.ribeiropython.twitterproject.entity.TweetDatabaseDeux;
 import ch.ribeiropython.twitterproject.entity.TweetEntityDeux;
-import ch.ribeiropython.twitterproject.entity.TweetViewModel;
 
 public class Menu extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, android.view.Menu {
 
     private ListView listViewTweet;
     private oneTweetAdapter mAdapter;
-
-    private TweetViewModel tweetViewModel;
     TweetDatabaseDeux db;
 
 
@@ -51,7 +47,8 @@ public class Menu extends AppCompatActivity
         /* tweetsList.add(new oneTweet("nolsen", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat." , "#jeviensjamaisencours #acausedemamaindroite"));
          */
 
-        ArrayList<TweetEntityDeux> listTweet = new ArrayList<>();
+       // addTweetOndb();
+        /*ArrayList<TweetEntityDeux> listTweet = new ArrayList<>();
         listTweet.add(new TweetEntityDeux("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat.", 1 , "#2013 #mateub"));
         listTweet.add(new TweetEntityDeux("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat.", 2 , "#2013 #mateub"));
         listTweet.add(new TweetEntityDeux("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat.", 31 , "#2013 #mateub"));
@@ -68,33 +65,21 @@ public class Menu extends AppCompatActivity
             } catch (SQLiteConstraintException e) {
                 duplicates = true;
             }
-        }
+        }*/
 
        // TweetDatabaseDeux db = TweetDatabaseDeux.getAppDatabase(this);
 
+        //Charge les infos présente dans la base de données
+        db = TweetDatabaseDeux.getAppDatabase(this);
         List<TweetEntityDeux> fruits = db.tweetDao().getAllTweets();
-        List<TweetEntityDeux> array = new ArrayList<>();
+
         for (TweetEntityDeux fruit : fruits){
-            array.add(fruit);
           // Toast.makeText(Menu.this, fruit.getIdUser(), Toast.LENGTH_SHORT).show();
             System.out.println("id user : "+fruit.getIdUser()+"message : "+fruit.getMessage());
             tweetsList.add(new oneTweet("ma bite",fruit.getMessage() , fruit.getHashtags()));
         }
 
-        System.out.println(array);
-
-        tweetViewModel = ViewModelProviders.of(this).get(TweetViewModel.class);
-        /*tweetViewModel.getAllTweets().observe(this, new Observer<List<TweetEntityDeux>>() {
-            @Override
-            public void onChanged(List<TweetEntityDeux> tweetEntities) {
-                for (TweetEntity tweet : tweetEntities)
-                {
-                    tweetsList.add(new oneTweet("Test", tweet.getMessage(), tweet.getHashtags()));
-                }
-                Toast.makeText(Menu.this, "Heyhey", Toast.LENGTH_SHORT).show();
-            }
-        });*/
-
+        //Ajoute la liste de tweet récupérer dans l'adapter
         mAdapter = new oneTweetAdapter(this,tweetsList);
         listViewTweet.setAdapter(mAdapter);
 
@@ -121,6 +106,27 @@ public class Menu extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    public void addTweetOndb(){
+        ArrayList<TweetEntityDeux> listTweet = new ArrayList<>();
+        listTweet.add(new TweetEntityDeux("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat.", 1 , "#2013 #mateub"));
+        listTweet.add(new TweetEntityDeux("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat.", 2 , "#2013 #mateub"));
+        listTweet.add(new TweetEntityDeux("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat.", 31 , "#2013 #mateub"));
+
+
+        db = TweetDatabaseDeux.getAppDatabase(this);
+
+        boolean duplicates = false;
+
+        for (TweetEntityDeux tweet : listTweet) {
+            try {
+                db.tweetDao().insert(tweet);
+                //db.tweetDao().insertAll(new TweetEntityDeux(tweet.getMessage(),tweet.getIdUser(),tweet.getHashtags()));
+            } catch (SQLiteConstraintException e) {
+                duplicates = true;
+            }
+        }
     }
 
     @Override

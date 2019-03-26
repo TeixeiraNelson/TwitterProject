@@ -9,6 +9,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
+import ch.ribeiropython.twitterproject.oneTweet;
 
 @Dao
 public interface TweetDao {
@@ -30,5 +31,8 @@ public interface TweetDao {
 
     @Query("SELECT * FROM tweets")
     List<TweetEntityDeux> getAllTweets();
+
+    @Query("SELECT message,nickname,hashtags FROM tweets,users WHERE tweets.idUser = users.id")
+    List<oneTweet> getAllTweetsWithUsername();
 
 }
