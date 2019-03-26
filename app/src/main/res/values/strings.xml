@@ -42,5 +42,6 @@ Any use or reliance on any Content or materials posted via the Services or obtai
     <string name="Int_nickname">nickname</string>
     <string name="Int_tweet">tweet</string>
     <string name="Int_hashtags">hashtags</string>
+    <string name="Int_idTweet">idTweet</string>
 
 </resources>

@@ -49,6 +49,9 @@ public class oneTweetAdapter extends ArrayAdapter<oneTweet> {
                 intent.putExtra(mContext.getString(R.string.Int_nickname), currentMovie.getPseudo());
                 intent.putExtra(mContext.getString(R.string.Int_hashtags), currentMovie.getHashtag());
                 intent.putExtra(mContext.getString(R.string.Int_tweet), currentMovie.getTweet());
+                intent.putExtra(mContext.getString(R.string.Int_idTweet), currentMovie.getIdTweet());
+
+                mContext.startActivity(intent);
             }
         });
         return listItem;
