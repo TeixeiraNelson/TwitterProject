@@ -5,27 +5,25 @@ import android.os.AsyncTask;
 
 import java.util.List;
 
-import androidx.lifecycle.LiveData;
-
 public class TweetRepository {
     private TweetDao tweetDao;
-    private LiveData<List<TweetEntity>> allTweets;
+    private List<TweetEntityDeux> allTweets;
 
     public TweetRepository(Application application){
-        TweetDatabase database = TweetDatabase.getInstance(application);
+        TweetDatabaseDeux database = TweetDatabaseDeux.getAppDatabase(application);
 
         tweetDao = database.tweetDao();
         allTweets  = tweetDao.getAllTweets();
     }
 
-    public void insert(TweetEntity tweetEntity){
+    public void insert(TweetEntityDeux tweetEntity){
         new InsertTweetAsyncTask(tweetDao).execute(tweetEntity);
     }
 
-    public void update(TweetEntity tweetEntity){
+    public void update(TweetEntityDeux tweetEntity){
         new UpdateTweetAsyncTask(tweetDao).execute(tweetEntity);
     }
-    public void delete(TweetEntity tweetEntity){
+    public void delete(TweetEntityDeux tweetEntity){
         new DeleteTweetAsyncTask(tweetDao).execute(tweetEntity);
 
     }
@@ -33,11 +31,11 @@ public class TweetRepository {
         new DeleteAllTweetsAsyncTask(tweetDao).execute();
     }
 
-    public LiveData<List<TweetEntity>> getAllTweets(){
+    public List<TweetEntityDeux> getAllTweets(){
        return allTweets;
     }
 
-    private static class InsertTweetAsyncTask extends AsyncTask<TweetEntity, Void, Void>{
+    private static class InsertTweetAsyncTask extends AsyncTask<TweetEntityDeux, Void, Void>{
 
         private TweetDao tweetDao;
 
@@ -46,14 +44,14 @@ public class TweetRepository {
         }
 
         @Override
-        protected Void doInBackground(TweetEntity... tweetEntities) {
+        protected Void doInBackground(TweetEntityDeux... tweetEntities) {
 
             tweetDao.insert(tweetEntities[0]);
 
             return null;
         }
     }
-    private static class UpdateTweetAsyncTask extends AsyncTask<TweetEntity, Void, Void>{
+    private static class UpdateTweetAsyncTask extends AsyncTask<TweetEntityDeux, Void, Void>{
 
         private TweetDao tweetDao;
 
@@ -62,14 +60,14 @@ public class TweetRepository {
         }
 
         @Override
-        protected Void doInBackground(TweetEntity... tweetEntities) {
+        protected Void doInBackground(TweetEntityDeux... tweetEntities) {
 
             tweetDao.update(tweetEntities[0]);
 
             return null;
         }
     }
-    private static class DeleteTweetAsyncTask extends AsyncTask<TweetEntity, Void, Void>{
+    private static class DeleteTweetAsyncTask extends AsyncTask<TweetEntityDeux, Void, Void>{
 
         private TweetDao tweetDao;
 
@@ -78,7 +76,7 @@ public class TweetRepository {
         }
 
         @Override
-        protected Void doInBackground(TweetEntity... tweetEntities) {
+        protected Void doInBackground(TweetEntityDeux... tweetEntities) {
 
             tweetDao.delete(tweetEntities[0]);
 

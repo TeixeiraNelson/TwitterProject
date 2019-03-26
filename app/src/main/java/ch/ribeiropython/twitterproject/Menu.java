@@ -2,13 +2,13 @@ package ch.ribeiropython.twitterproject;
 
 import android.content.ComponentName;
 import android.content.Intent;
+import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -21,9 +21,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import ch.ribeiropython.twitterproject.entity.TweetEntity;
+import ch.ribeiropython.twitterproject.entity.TweetDatabaseDeux;
+import ch.ribeiropython.twitterproject.entity.TweetEntityDeux;
 import ch.ribeiropython.twitterproject.entity.TweetViewModel;
 
 public class Menu extends AppCompatActivity
@@ -33,6 +33,7 @@ public class Menu extends AppCompatActivity
     private oneTweetAdapter mAdapter;
 
     private TweetViewModel tweetViewModel;
+    TweetDatabaseDeux db;
 
 
     @Override
@@ -47,20 +48,52 @@ public class Menu extends AppCompatActivity
         listViewTweet = (ListView) findViewById(R.id.listViewTweet);
         tweetsList.add(new oneTweet("Test pseudo 1", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat." , "#2013 #mateub"));
         tweetsList.add(new oneTweet("Gafundi", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat." , "#salouti #heyheyhey"));
-       /* tweetsList.add(new oneTweet("nolsen", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat." , "#jeviensjamaisencours #acausedemamaindroite"));
-*/
+        /* tweetsList.add(new oneTweet("nolsen", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat." , "#jeviensjamaisencours #acausedemamaindroite"));
+         */
+
+        ArrayList<TweetEntityDeux> listTweet = new ArrayList<>();
+        listTweet.add(new TweetEntityDeux("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat.", 1 , "#2013 #mateub"));
+        listTweet.add(new TweetEntityDeux("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat.", 2 , "#2013 #mateub"));
+        listTweet.add(new TweetEntityDeux("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat.", 31 , "#2013 #mateub"));
+
+
+        db = TweetDatabaseDeux.getAppDatabase(this);
+
+        boolean duplicates = false;
+
+        for (TweetEntityDeux tweet : listTweet) {
+            try {
+               // db.tweetDao().insert(tweet);
+                //db.tweetDao().insertAll(new TweetEntityDeux(tweet.getMessage(),tweet.getIdUser(),tweet.getHashtags()));
+            } catch (SQLiteConstraintException e) {
+                duplicates = true;
+            }
+        }
+
+       // TweetDatabaseDeux db = TweetDatabaseDeux.getAppDatabase(this);
+
+        List<TweetEntityDeux> fruits = db.tweetDao().getAllTweets();
+        List<TweetEntityDeux> array = new ArrayList<>();
+        for (TweetEntityDeux fruit : fruits){
+            array.add(fruit);
+          // Toast.makeText(Menu.this, fruit.getIdUser(), Toast.LENGTH_SHORT).show();
+            System.out.println("id user : "+fruit.getIdUser()+"message : "+fruit.getMessage());
+            tweetsList.add(new oneTweet("ma bite",fruit.getMessage() , fruit.getHashtags()));
+        }
+
+        System.out.println(array);
 
         tweetViewModel = ViewModelProviders.of(this).get(TweetViewModel.class);
-        tweetViewModel.getAllTweets().observe(this, new Observer<List<TweetEntity>>() {
+        /*tweetViewModel.getAllTweets().observe(this, new Observer<List<TweetEntityDeux>>() {
             @Override
-            public void onChanged(List<TweetEntity> tweetEntities) {
-               /* for (TweetEntity tweet : tweetEntities)
+            public void onChanged(List<TweetEntityDeux> tweetEntities) {
+                for (TweetEntity tweet : tweetEntities)
                 {
                     tweetsList.add(new oneTweet("Test", tweet.getMessage(), tweet.getHashtags()));
-                }*/
+                }
                 Toast.makeText(Menu.this, "Heyhey", Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
 
         mAdapter = new oneTweetAdapter(this,tweetsList);
         listViewTweet.setAdapter(mAdapter);

@@ -1,17 +1,16 @@
 package ch.ribeiropython.twitterproject.entity;
 
 import android.app.Application;
-import androidx.lifecycle.AndroidViewModel;
-import androidx.annotation.NonNull;
 
 import java.util.List;
 
-import androidx.lifecycle.LiveData;
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 
 public class TweetViewModel extends AndroidViewModel {
 
     private TweetRepository repository;
-    private LiveData<List<TweetEntity>> allTweets;
+    private List<TweetEntityDeux> allTweets;
 
     public TweetViewModel(@NonNull Application application) {
         super(application);
@@ -20,15 +19,15 @@ public class TweetViewModel extends AndroidViewModel {
         allTweets = repository.getAllTweets();
     }
 
-    public void insert(TweetEntity tweetEntity) {
+    public void insert(TweetEntityDeux tweetEntity) {
         repository.insert(tweetEntity);
     }
 
-    public void update(TweetEntity tweetEntity) {
+    public void update(TweetEntityDeux tweetEntity) {
         repository.update(tweetEntity);
     }
 
-    public void delete(TweetEntity tweetEntity) {
+    public void delete(TweetEntityDeux tweetEntity) {
         repository.delete(tweetEntity);
     }
 
@@ -36,7 +35,7 @@ public class TweetViewModel extends AndroidViewModel {
         repository.deleteAllTweets();
     }
 
-    public LiveData<List<TweetEntity>> getAllTweets(){
+    public List<TweetEntityDeux> getAllTweets(){
         return allTweets;
     }
 

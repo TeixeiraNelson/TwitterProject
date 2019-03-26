@@ -40,4 +40,20 @@ public class TweetEntityDeux {
     public String getHashtags() {
         return hashtags;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public void setIdUser(int idUser) {
+        this.idUser= idUser;
+    }
+
+    public void setHashtags(String hashtags) {
+        this.hashtags= hashtags;
+    }
 }
