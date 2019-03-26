@@ -23,6 +23,8 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import ch.ribeiropython.twitterproject.entity.TweetDatabaseDeux;
 import ch.ribeiropython.twitterproject.entity.TweetEntityDeux;
+import ch.ribeiropython.twitterproject.entity.UserDatabase;
+import ch.ribeiropython.twitterproject.entity.UserEntity;
 
 public class Menu extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, android.view.Menu {
@@ -42,12 +44,12 @@ public class Menu extends AppCompatActivity
 
         //Récupère les tweets et les affiches dans le listview
         listViewTweet = (ListView) findViewById(R.id.listViewTweet);
-        tweetsList.add(new oneTweet("Test pseudo 1", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat." , "#2013 #mateub"));
-        tweetsList.add(new oneTweet("Gafundi", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat." , "#salouti #heyheyhey"));
+       // tweetsList.add(new oneTweet("Test pseudo 1", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat." , "#2013 #mateub"));
+        // tweetsList.add(new oneTweet("Gafundi", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat." , "#salouti #heyheyhey"));
         /* tweetsList.add(new oneTweet("nolsen", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat." , "#jeviensjamaisencours #acausedemamaindroite"));
          */
 
-       // addTweetOndb();
+       addTweetOndb();
         /*ArrayList<TweetEntityDeux> listTweet = new ArrayList<>();
         listTweet.add(new TweetEntityDeux("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat.", 1 , "#2013 #mateub"));
         listTweet.add(new TweetEntityDeux("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat.", 2 , "#2013 #mateub"));
@@ -76,7 +78,7 @@ public class Menu extends AppCompatActivity
         for (TweetEntityDeux fruit : fruits){
           // Toast.makeText(Menu.this, fruit.getIdUser(), Toast.LENGTH_SHORT).show();
             System.out.println("id user : "+fruit.getIdUser()+"message : "+fruit.getMessage());
-            tweetsList.add(new oneTweet("ma bite",fruit.getMessage() , fruit.getHashtags()));
+            tweetsList.add(new oneTweet("ma bite",fruit.getMessage() , fruit.getHashtags(), fruit.getId()));
         }
 
         //Ajoute la liste de tweet récupérer dans l'adapter
@@ -109,6 +111,25 @@ public class Menu extends AppCompatActivity
     }
 
     public void addTweetOndb(){
+        boolean duplicates = false;
+
+        ArrayList<UserEntity> listUser = new ArrayList<>();
+        listUser.add(new UserEntity("bonjour@test.com","test","Test1"));
+        listUser.add(new UserEntity("bonjour@test2.com","test2","Test2"));
+        listUser.add(new UserEntity("bonjour@test3.com","test3","Test3"));
+
+
+        UserDatabase db2 = UserDatabase.getAppDatabase(this);
+        for (UserEntity user : listUser) {
+            try {
+                db2.UserDao().insert(new UserEntity(user.getEmail(),user.getPass(),user.getNickname()));
+                //db.tweetDao().insertAll(new TweetEntityDeux(tweet.getMessage(),tweet.getIdUser(),tweet.getHashtags()));
+            } catch (SQLiteConstraintException e) {
+                duplicates = true;
+            }
+        }
+
+
         ArrayList<TweetEntityDeux> listTweet = new ArrayList<>();
         listTweet.add(new TweetEntityDeux("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat.", 1 , "#2013 #mateub"));
         listTweet.add(new TweetEntityDeux("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat.", 2 , "#2013 #mateub"));
@@ -117,7 +138,7 @@ public class Menu extends AppCompatActivity
 
         db = TweetDatabaseDeux.getAppDatabase(this);
 
-        boolean duplicates = false;
+
 
         for (TweetEntityDeux tweet : listTweet) {
             try {
@@ -127,6 +148,9 @@ public class Menu extends AppCompatActivity
                 duplicates = true;
             }
         }
+
+
+
     }
 
     @Override

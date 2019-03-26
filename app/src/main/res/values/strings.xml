@@ -30,11 +30,17 @@ You are responsible for your use of the Services and for any Content you provide
 Any use or reliance on any Content or materials posted via the Services or obtained by you through the Services is at your own risk. We do not endorse, support, represent or guarantee the completeness, truthfulness, accuracy, or reliability of any Content or communications posted via the Services or endorse any opinions expressed via the Services. You understand that by using the Services, you may be exposed to Content that might be offensive, harmful, inaccurate or otherwise inappropriate, or in some cases, postings that have been mislabeled or are otherwise deceptive. All Content is the sole responsibility of the person who originated such Content. We may not monitor or control the Content posted via the Services and, we cannot take responsibility for such Content. We reserve the right to remove Content that violates the User Agreement, including for example, copyright or trademark violations, impersonation, unlawful conduct, or harassment. Information regarding specific policies and the process for reporting or appealing violations can be found in our Help Center (https://support.twitter.com/articles/15789#specific-violations and https://support.twitter.com/articles/15790).</string>
 
 
-<!-- Errors strings -->
+    <!-- Errors strings -->
     <string name="invalid_email_syntax">Invalid Email syntax</string>
     <string name="invalid_passwd_match">Passwords do not match</string>
     <string name="invalid_passwd_length">Passwords must have at least 6 characters</string>
     <string name="invalid_nickname">Nickname already in use</string>
     <string name="valid_info">Valid information</string>
+    
+    
+    <!-- Extra Intent String -->
+    <string name="Int_nickname">nickname</string>
+    <string name="Int_tweet">tweet</string>
+    <string name="Int_hashtags">hashtags</string>
 
 </resources>

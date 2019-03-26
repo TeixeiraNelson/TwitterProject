@@ -1,9 +1,7 @@
 package ch.ribeiropython.twitterproject;
 
 import android.content.Context;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +10,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 public class oneTweetAdapter extends ArrayAdapter<oneTweet> {
 
@@ -30,7 +31,7 @@ public class oneTweetAdapter extends ArrayAdapter<oneTweet> {
         if(listItem == null)
             listItem = LayoutInflater.from(mContext).inflate(R.layout.tweet,parent,false);
 
-        oneTweet currentMovie = tweetList.get(position);
+        final oneTweet currentMovie = tweetList.get(position);
 
         TextView pseudo = (TextView) listItem.findViewById(R.id.textView_pseudo);
         pseudo.setText(currentMovie.getPseudo());
@@ -41,6 +42,15 @@ public class oneTweetAdapter extends ArrayAdapter<oneTweet> {
         TextView hashtag = (TextView) listItem.findViewById(R.id.textView_hashtag);
         hashtag.setText(currentMovie.getHashtag());
 
+        listItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent(mContext, TweetModifyActivity.class);
+                intent.putExtra(mContext.getString(R.string.Int_nickname), currentMovie.getPseudo());
+                intent.putExtra(mContext.getString(R.string.Int_hashtags), currentMovie.getHashtag());
+                intent.putExtra(mContext.getString(R.string.Int_tweet), currentMovie.getTweet());
+            }
+        });
         return listItem;
     }
 }

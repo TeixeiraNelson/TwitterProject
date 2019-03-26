@@ -2,6 +2,8 @@ package ch.ribeiropython.twitterproject;
 
 import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +26,6 @@ public class Tweet extends AppCompatActivity {
         listTweet.add(new TweetEntityDeux("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat.", 1 , "#2013 #mateub"));
         listTweet.add(new TweetEntityDeux("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat.", 2 , "#2013 #mateub"));
         listTweet.add(new TweetEntityDeux("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat.", 31 , "#2013 #mateub"));
-
 
         db = TweetDatabaseDeux.getAppDatabase(this);
 
@@ -51,5 +52,23 @@ public class Tweet extends AppCompatActivity {
 
 
         System.out.println(array);
+    }
+
+    private void sendNewTweet(View o){
+
+        /*
+        TODO : Changer le user en dur et aller le chercher dans les shared Preferences.
+         */
+
+        EditText tweetTxt = findViewById(R.id.txtTweetEdit);
+        String msg = tweetTxt.getText().toString();
+
+        EditText hashTags = findViewById(R.id.txtHashtag);
+        String hashtags = hashTags.getText().toString();
+
+        db = TweetDatabaseDeux.getAppDatabase(this);
+        db.tweetDao().insertAll(new TweetEntityDeux(msg,1,hashtags));
+
+
     }
 }

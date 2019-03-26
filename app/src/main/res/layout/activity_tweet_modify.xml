@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Tweet">
+    tools:context=".TweetModifyActivity">
 
     <TextView
         android:id="@+id/textView4Edit"
@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="79dp"
-        android:text="Tweet"
+        android:text="Edit your Tweet"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/txtTweetEdit"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/txtUsername"
+        android:id="@+id/txtUsername2Edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -47,14 +47,14 @@
         app:layout_constraintTop_toBottomOf="@+id/textView4Edit" />
 
     <EditText
-        android:id="@+id/txtHashtag"
+        android:id="@+id/txtHashtagEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginBottom="360dp"
         android:ems="10"
-        android:inputType="textPersonName"
         android:hint="Hashtag"
+        android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtTweetEdit" />
@@ -65,10 +65,21 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="241dp"
-        android:text="Send"
-        android:onClick="sendNewTweet"
+        android:text="Delete"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtTweetEdit" />
+
+    <Button
+        android:id="@+id/btnModifyTweet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="241dp"
+        android:text="Modify"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnDeleteTweet"
+        app:layout_constraintTop_toBottomOf="@+id/txtTweetEdit"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
