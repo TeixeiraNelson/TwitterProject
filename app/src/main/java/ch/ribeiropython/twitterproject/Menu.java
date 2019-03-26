@@ -8,18 +8,22 @@ import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import ch.ribeiropython.twitterproject.entity.TweetEntity;
 import ch.ribeiropython.twitterproject.entity.TweetViewModel;
 
 public class Menu extends AppCompatActivity
@@ -30,23 +34,37 @@ public class Menu extends AppCompatActivity
 
     private TweetViewModel tweetViewModel;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Initialisation de la page menu
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
+        ArrayList<oneTweet> tweetsList = new ArrayList<>();
+
         //Récupère les tweets et les affiches dans le listview
         listViewTweet = (ListView) findViewById(R.id.listViewTweet);
-        ArrayList<oneTweet> tweetsList = new ArrayList<>();
         tweetsList.add(new oneTweet("Test pseudo 1", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat." , "#2013 #mateub"));
         tweetsList.add(new oneTweet("Gafundi", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat." , "#salouti #heyheyhey"));
-        tweetsList.add(new oneTweet("nolsen", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat." , "#jeviensjamaisencours #acausedemamaindroite"));
+       /* tweetsList.add(new oneTweet("nolsen", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat." , "#jeviensjamaisencours #acausedemamaindroite"));
+*/
 
         tweetViewModel = ViewModelProviders.of(this).get(TweetViewModel.class);
+        tweetViewModel.getAllTweets().observe(this, new Observer<List<TweetEntity>>() {
+            @Override
+            public void onChanged(List<TweetEntity> tweetEntities) {
+               /* for (TweetEntity tweet : tweetEntities)
+                {
+                    tweetsList.add(new oneTweet("Test", tweet.getMessage(), tweet.getHashtags()));
+                }*/
+                Toast.makeText(Menu.this, "Heyhey", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         mAdapter = new oneTweetAdapter(this,tweetsList);
         listViewTweet.setAdapter(mAdapter);
+
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
