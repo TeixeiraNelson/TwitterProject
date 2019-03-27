@@ -1,5 +1,6 @@
 package ch.ribeiropython.twitterproject;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -52,6 +53,7 @@ public class oneTweetAdapter extends ArrayAdapter<oneTweet> {
                 intent.putExtra(mContext.getString(R.string.Int_idTweet), currentMovie.getIdTweet());
 
                 mContext.startActivity(intent);
+                ((Activity) mContext).finish();
             }
         });
         return listItem;

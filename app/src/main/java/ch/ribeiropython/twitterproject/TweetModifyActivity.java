@@ -12,6 +12,11 @@ public class TweetModifyActivity extends AppCompatActivity {
     private TextView tweet;
     private TextView hashtags;
 
+    private String usernameSt;
+    private String tweetSt;
+    private String hashtagsSt;
+    private String idTweet;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,16 +27,23 @@ public class TweetModifyActivity extends AppCompatActivity {
         hashtags = findViewById(R.id.txtHashtagEdit);
 
         Intent intent = getIntent();
-        String usernameSt = intent.getStringExtra(getResources().getString(R.string.Int_nickname));
-        String tweetSt = intent.getStringExtra(getResources().getString(R.string.Int_tweet));
-        String hashtagsSt = intent.getStringExtra(getResources().getString(R.string.Int_hashtags));
-        String idTweet = intent.getStringExtra(getResources().getString(R.string.Int_idTweet));
+        usernameSt = intent.getStringExtra(getResources().getString(R.string.Int_nickname));
+        tweetSt = intent.getStringExtra(getResources().getString(R.string.Int_tweet));
+        hashtagsSt = intent.getStringExtra(getResources().getString(R.string.Int_hashtags));
+        idTweet = intent.getStringExtra(getResources().getString(R.string.Int_idTweet));
 
         username.setText(usernameSt);
         tweet.setText(tweetSt);
         hashtags.setText(hashtagsSt);
 
 
+
+
+
+
+    }
+
+    protected void deleteTweet(){
 
     }
 }

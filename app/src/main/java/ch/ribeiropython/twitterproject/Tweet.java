@@ -1,7 +1,9 @@
 package ch.ribeiropython.twitterproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -49,23 +51,31 @@ public class Tweet extends AppCompatActivity {
 
         System.out.println(array);
         */
-    }
 
-    private void sendNewTweet(View o){
 
-        /*
-        TODO : Changer le user en dur et aller le chercher dans les shared Preferences.
+      Button sendButton = findViewById(R.id.btnDeleteTweet);
+      sendButton.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              /*
+             TODO : Changer le user en dur et aller le chercher dans les shared Preferences.
          */
 
-        EditText tweetTxt = findViewById(R.id.txtTweetEdit);
-        String msg = tweetTxt.getText().toString();
+              EditText tweetTxt = findViewById(R.id.txtTweetEdit);
+              String msg = tweetTxt.getText().toString();
 
-        EditText hashTags = findViewById(R.id.txtHashtagEdit);
-        String hashtags = hashTags.getText().toString();
+              EditText hashTags = findViewById(R.id.txtHashtagEdit);
+              String hashtags = hashTags.getText().toString();
 
-        db = TweetDatabaseDeux.getAppDatabase(this);
-        db.tweetDao().insertAll(new TweetEntityDeux(msg,1,hashtags));
+              db = TweetDatabaseDeux.getAppDatabase(Tweet.this.getApplicationContext());
+              db.tweetDao().insertAll(new TweetEntityDeux(msg,1,hashtags));
 
-
+              Intent intent = new Intent(Tweet.this.getApplicationContext(), Menu.class);
+              startActivity(intent);
+              finish();
+          }
+      });
     }
+
+
 }
