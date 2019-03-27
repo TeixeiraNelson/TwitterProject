@@ -2,13 +2,16 @@ package ch.ribeiropython.twitterproject.entity;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "tweets")
+@Entity(tableName = "tweets",foreignKeys = @ForeignKey(entity = UserEntity.class, parentColumns = "idUserEntity", childColumns = "idUser"),indices = {@Index("idUser")})
 public class TweetEntityDeux {
 
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    @ColumnInfo (name = "idTweetEntity")
+    private int idTweetEntity;
 
     @ColumnInfo (name = "message")
     private String message;
@@ -30,9 +33,6 @@ public class TweetEntityDeux {
         this.hashtags = hashtags;
     }
 
-    public int getId() {
-        return id;
-    }
 
     public String getMessage() {
         return message;
@@ -44,10 +44,6 @@ public class TweetEntityDeux {
 
     public String getHashtags() {
         return hashtags;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public void setMessage(String message) {
@@ -63,5 +59,13 @@ public class TweetEntityDeux {
 
     public void setHashtags(String hashtags) {
         this.hashtags= hashtags;
+    }
+
+    public int getIdTweetEntity() {
+        return idTweetEntity;
+    }
+
+    public void setIdTweetEntity(int idTweetEntity) {
+        this.idTweetEntity = idTweetEntity;
     }
 }

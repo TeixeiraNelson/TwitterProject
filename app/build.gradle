@@ -1,6 +1,9 @@
 apply plugin: 'com.android.application'
 
 android {
+    dexOptions {
+        javaMaxHeapSize "2g"
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "ch.ribeiropython.twitterproject"

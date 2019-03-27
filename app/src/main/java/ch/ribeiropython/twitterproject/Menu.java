@@ -23,7 +23,6 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import ch.ribeiropython.twitterproject.entity.TweetDatabaseDeux;
 import ch.ribeiropython.twitterproject.entity.TweetEntityDeux;
-import ch.ribeiropython.twitterproject.entity.UserDatabase;
 import ch.ribeiropython.twitterproject.entity.UserEntity;
 
 public class Menu extends AppCompatActivity
@@ -49,9 +48,9 @@ public class Menu extends AppCompatActivity
         /* tweetsList.add(new oneTweet("nolsen", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat." , "#jeviensjamaisencours #acausedemamaindroite"));
          */
 
-       /* TODO : Faire que sa le fasse  qu'au premier démarrage
+       // TODO : Faire que sa le fasse  qu'au premier démarrage
 
-       addTweetOndb(); */
+       addTweetOndb();
 
 
         /*ArrayList<TweetEntityDeux> listTweet = new ArrayList<>();
@@ -75,15 +74,24 @@ public class Menu extends AppCompatActivity
 
        // TweetDatabaseDeux db = TweetDatabaseDeux.getAppDatabase(this);
 
-        //Charge les infos présente dans la base de données
+        //Charge les infos présente dans la base de données tweets
         db = TweetDatabaseDeux.getAppDatabase(this);
-        List<TweetEntityDeux> fruits = db.tweetDao().getAllTweets();
+        List<oneTweet> fruits = db.tweetDao().getAllTweetsWithUsername();
 
-        for (TweetEntityDeux fruit : fruits){
+        for (oneTweet fruit : fruits){
           // Toast.makeText(Menu.this, fruit.getIdUser(), Toast.LENGTH_SHORT).show();
-            System.out.println("id user : "+fruit.getIdUser()+"message : "+fruit.getMessage());
-            tweetsList.add(new oneTweet("ma bite",fruit.getMessage() , fruit.getHashtags(), fruit.getId()));
+            System.out.println("Affiche ===> Pseudo : "+fruit.getPseudo()+" message : "+fruit.getTweet()+" hastags : "+fruit.getHashtag()+" id tweet : "+fruit.getIdTweet());
+            tweetsList.add(new oneTweet(fruit.getPseudo(),fruit.getTweet() , fruit.getHashtag(), fruit.getIdTweet()));
         }
+
+        //Charge les infos présente dans la base de données users
+       /* db2 = UserDatabase.getAppDatabase(this);
+        List<UserEntity> users = db2.UserDao().getAllUsers();
+
+        for (UserEntity fruit : users){
+            // Toast.makeText(Menu.this, fruit.getIdUser(), Toast.LENGTH_SHORT).show();
+            System.out.println("id user : "+fruit.getId()+"nickname : "+fruit.getNickname());
+        }*/
 
         //Ajoute la liste de tweet récupérer dans l'adapter
         mAdapter = new oneTweetAdapter(this,tweetsList);
@@ -115,6 +123,8 @@ public class Menu extends AppCompatActivity
     }
 
     public void addTweetOndb(){
+
+        db = TweetDatabaseDeux.getAppDatabase(this);
         boolean duplicates = false;
 
         ArrayList<UserEntity> listUser = new ArrayList<>();
@@ -122,11 +132,9 @@ public class Menu extends AppCompatActivity
         listUser.add(new UserEntity("bonjour@test2.com","test2","Test2"));
         listUser.add(new UserEntity("bonjour@test3.com","test3","Test3"));
 
-
-        UserDatabase db2 = UserDatabase.getAppDatabase(this);
         for (UserEntity user : listUser) {
             try {
-                db2.UserDao().insert(new UserEntity(user.getEmail(),user.getPass(),user.getNickname()));
+                db.UserDao().insert(new UserEntity(user.getEmail(),user.getPass(),user.getNickname()));
                 //db.tweetDao().insertAll(new TweetEntityDeux(tweet.getMessage(),tweet.getIdUser(),tweet.getHashtags()));
             } catch (SQLiteConstraintException e) {
                 duplicates = true;
@@ -136,18 +144,17 @@ public class Menu extends AppCompatActivity
 
         ArrayList<TweetEntityDeux> listTweet = new ArrayList<>();
         listTweet.add(new TweetEntityDeux("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat.", 1 , "#2013 #mateub"));
-        listTweet.add(new TweetEntityDeux("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat.", 2 , "#2013 #mateub"));
-        listTweet.add(new TweetEntityDeux("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat.", 31 , "#2013 #mateub"));
-
-
-        db = TweetDatabaseDeux.getAppDatabase(this);
-
+        listTweet.add(new TweetEntityDeux("Hey ho ho hey", 2 , "#super"));
+        listTweet.add(new TweetEntityDeux("Super nouveau tweet a moi heyheyhey", 3 , "#heyben"));
+        listTweet.add(new TweetEntityDeux("je viens de décrouvrir un nouveau réseau social !", 2 , "#2emeTweet #Inshalla"));
 
 
         for (TweetEntityDeux tweet : listTweet) {
             try {
                 db.tweetDao().insert(tweet);
                 //db.tweetDao().insertAll(new TweetEntityDeux(tweet.getMessage(),tweet.getIdUser(),tweet.getHashtags()));
+                System.out.println("Ce qu'il entre ===> Pseudo : "+tweet.getIdUser()+" message : "+tweet.getMessage()+" hastags : "+tweet.getHashtags()+" id tweet : "+tweet.getIdTweetEntity());
+
             } catch (SQLiteConstraintException e) {
                 duplicates = true;
             }

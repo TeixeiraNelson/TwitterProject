@@ -6,7 +6,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {TweetEntityDeux.class}, version = 1)
+@Database(entities = {TweetEntityDeux.class,UserEntity.class}, version = 1, exportSchema = false)
 public abstract class TweetDatabaseDeux extends RoomDatabase {
 
     private static TweetDatabaseDeux INSTANCE;
@@ -15,6 +15,7 @@ public abstract class TweetDatabaseDeux extends RoomDatabase {
     private static final Object LOCK = new Object();
 
     public abstract TweetDao tweetDao();
+    public abstract UserDao UserDao();
 
     public synchronized static TweetDatabaseDeux getAppDatabase(Context context) {
         if (INSTANCE == null) {
