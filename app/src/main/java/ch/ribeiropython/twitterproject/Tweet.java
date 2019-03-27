@@ -1,12 +1,8 @@
 package ch.ribeiropython.twitterproject;
 
-import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 import ch.ribeiropython.twitterproject.entity.TweetDatabaseDeux;
@@ -22,7 +18,7 @@ public class Tweet extends AppCompatActivity {
         setContentView(R.layout.activity_tweet);
 
 
-       ArrayList<TweetEntityDeux> listTweet = new ArrayList<>();
+      /* ArrayList<TweetEntityDeux> listTweet = new ArrayList<>();
         listTweet.add(new TweetEntityDeux("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat.", 1 , "#2013 #mateub"));
         listTweet.add(new TweetEntityDeux("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat.", 2 , "#2013 #mateub"));
         listTweet.add(new TweetEntityDeux("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat.", 31 , "#2013 #mateub"));
@@ -52,6 +48,7 @@ public class Tweet extends AppCompatActivity {
 
 
         System.out.println(array);
+        */
     }
 
     private void sendNewTweet(View o){
@@ -63,7 +60,7 @@ public class Tweet extends AppCompatActivity {
         EditText tweetTxt = findViewById(R.id.txtTweetEdit);
         String msg = tweetTxt.getText().toString();
 
-        EditText hashTags = findViewById(R.id.txtHashtag);
+        EditText hashTags = findViewById(R.id.txtHashtagEdit);
         String hashtags = hashTags.getText().toString();
 
         db = TweetDatabaseDeux.getAppDatabase(this);
