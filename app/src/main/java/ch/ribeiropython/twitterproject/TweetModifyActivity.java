@@ -30,5 +30,8 @@ public class TweetModifyActivity extends AppCompatActivity {
         username.setText(usernameSt);
         tweet.setText(tweetSt);
         hashtags.setText(hashtagsSt);
+
+
+
     }
 }

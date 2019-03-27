@@ -20,7 +20,11 @@ public class oneTweet {
     }
 
     public void setTweet(String tweet) {
-        this.tweet = tweet;
+
+        if(tweet.length()<=120)
+            this.tweet = tweet;
+        else
+            this.tweet = tweet.substring(0,119);
     }
 
     public String getHashtag() {
@@ -35,7 +39,12 @@ public class oneTweet {
 
     public oneTweet(String pseudo, String tweet, String hashtag, int idTweet) {
         this.pseudo = pseudo;
-        this.tweet = tweet;
+
+        if(tweet.length()<=120)
+            this.tweet = tweet;
+        else
+            this.tweet = tweet.substring(0,119);
+
         this.hashtag = hashtag;
         this.idTweet = idTweet;
     }

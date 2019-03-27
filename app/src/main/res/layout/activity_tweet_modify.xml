@@ -29,6 +29,7 @@
 
     <EditText
         android:id="@+id/txtTweetEdit"
+        android:maxLength="120"
         android:layout_width="379dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -52,7 +53,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/btnDeleteTweet"
+        android:id="@+id/btnSendTweet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
@@ -69,6 +70,19 @@
         android:layout_marginBottom="56dp"
         android:text="Modify"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnDeleteTweet" />
+        app:layout_constraintEnd_toStartOf="@+id/btnSendTweet" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="19dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:textStyle="italic"
+        android:text="A tweet can have only 120 characters max."
+        app:layout_constraintBottom_toTopOf="@+id/txtTweetEdit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtUsername2Edit" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

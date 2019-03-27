@@ -20,7 +20,12 @@ public class TweetEntityDeux {
     private String hashtags;
 
     public TweetEntityDeux(String message, int idUser, String hashtags) {
-        this.message = message;
+
+        if(message.length()<=120)
+            this.message = message;
+        else
+            this.message = message.substring(0,120);
+
         this.idUser = idUser;
         this.hashtags = hashtags;
     }
@@ -46,7 +51,10 @@ public class TweetEntityDeux {
     }
 
     public void setMessage(String message) {
-        this.message = message;
+        if(message.length()<=120)
+            this.message = message;
+        else
+            this.message = message.substring(0,119);
     }
 
     public void setIdUser(int idUser) {
