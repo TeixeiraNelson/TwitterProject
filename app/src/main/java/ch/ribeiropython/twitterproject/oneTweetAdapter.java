@@ -57,16 +57,17 @@ public class oneTweetAdapter extends ArrayAdapter<oneTweet> {
             @Override
             public void onClick(View arg0) {
 
-                if(user.nickname.equals(currentMovie.getPseudo())){
-                    Intent intent = new Intent(mContext, TweetModifyActivity.class);
-                    intent.putExtra(mContext.getString(R.string.Int_nickname), currentMovie.getPseudo());
-                    intent.putExtra(mContext.getString(R.string.Int_hashtags), currentMovie.getHashtag());
-                    intent.putExtra(mContext.getString(R.string.Int_tweet), currentMovie.getTweet());
-                    intent.putExtra(mContext.getString(R.string.Int_idTweet), currentMovie.getIdTweet());
+                if(user.nickname!=null)
+                    if(user.nickname.equals(currentMovie.getPseudo())){
+                        Intent intent = new Intent(mContext, TweetModifyActivity.class);
+                        intent.putExtra(mContext.getString(R.string.Int_nickname), currentMovie.getPseudo());
+                        intent.putExtra(mContext.getString(R.string.Int_hashtags), currentMovie.getHashtag());
+                        intent.putExtra(mContext.getString(R.string.Int_tweet), currentMovie.getTweet());
+                        intent.putExtra(mContext.getString(R.string.Int_idTweet), currentMovie.getIdTweet());
 
-                    mContext.startActivity(intent);
-                    ((Activity) mContext).finish();
-                }
+                        mContext.startActivity(intent);
+                        ((Activity) mContext).finish();
+                    }
 
             }
         });

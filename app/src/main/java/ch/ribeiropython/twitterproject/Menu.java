@@ -2,7 +2,6 @@ package ch.ribeiropython.twitterproject;
 
 import android.content.ComponentName;
 import android.content.Intent;
-import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -22,8 +21,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import ch.ribeiropython.twitterproject.entity.TweetDatabaseDeux;
-import ch.ribeiropython.twitterproject.entity.TweetEntityDeux;
-import ch.ribeiropython.twitterproject.entity.UserEntity;
 
 public class Menu extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, android.view.Menu {
@@ -48,10 +45,6 @@ public class Menu extends AppCompatActivity
         // tweetsList.add(new oneTweet("Gafundi", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat." , "#salouti #heyheyhey"));
         /* tweetsList.add(new oneTweet("nolsen", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat." , "#jeviensjamaisencours #acausedemamaindroite"));
          */
-
-       // TODO : Faire que sa le fasse  qu'au premier démarrage        addTweetOndb();
-
-
 
 
         /*ArrayList<TweetEntityDeux> listTweet = new ArrayList<>();
@@ -123,47 +116,6 @@ public class Menu extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    public void addTweetOndb(){
-
-        db = TweetDatabaseDeux.getAppDatabase(this);
-        boolean duplicates = false;
-
-        ArrayList<UserEntity> listUser = new ArrayList<>();
-        listUser.add(new UserEntity("bonjour@test.com","test","Test1"));
-        listUser.add(new UserEntity("bonjour@test2.com","test2","Test2"));
-        listUser.add(new UserEntity("bonjour@test3.com","test3","Test3"));
-
-        for (UserEntity user : listUser) {
-            try {
-                db.UserDao().insert(new UserEntity(user.getEmail(),user.getPass(),user.getNickname()));
-                //db.tweetDao().insertAll(new TweetEntityDeux(tweet.getMessage(),tweet.getIdUser(),tweet.getHashtags()));
-            } catch (SQLiteConstraintException e) {
-                duplicates = true;
-            }
-        }
-
-
-        ArrayList<TweetEntityDeux> listTweet = new ArrayList<>();
-        listTweet.add(new TweetEntityDeux("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat.", 1 , "#2013 #mateub"));
-        listTweet.add(new TweetEntityDeux("Hey ho ho hey", 2 , "#super"));
-        listTweet.add(new TweetEntityDeux("Super nouveau tweet a moi heyheyhey", 3 , "#heyben"));
-        listTweet.add(new TweetEntityDeux("je viens de décrouvrir un nouveau réseau social !", 2 , "#2emeTweet #Inshalla"));
-
-
-        for (TweetEntityDeux tweet : listTweet) {
-            try {
-                db.tweetDao().insert(tweet);
-                //db.tweetDao().insertAll(new TweetEntityDeux(tweet.getMessage(),tweet.getIdUser(),tweet.getHashtags()));
-                System.out.println("Ce qu'il entre ===> Pseudo : "+tweet.getIdUser()+" message : "+tweet.getMessage()+" hastags : "+tweet.getHashtags()+" id tweet : "+tweet.getIdTweetEntity());
-
-            } catch (SQLiteConstraintException e) {
-                duplicates = true;
-            }
-        }
-
-
-
-    }
 
     @Override
     public void onBackPressed() {

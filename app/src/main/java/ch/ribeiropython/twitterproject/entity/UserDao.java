@@ -31,10 +31,13 @@ public interface UserDao {
     @Query("SELECT * FROM users")
     List<UserEntity> getAllUsers();
 
-    @Query("SELECT email FROM users WHERE email = :email")
+     @Query("SELECT email FROM users WHERE email = :email")
     String getByEmail(String email);
 
     @Query("SELECT nickname FROM users WHERE nickname = :nickname")
     String getByNickname (String nickname);
+
+    @Query("SELECT * FROM users WHERE email = :email AND pass = :password")
+    UserEntity getUserLogin (String email, String password);
 
 }
