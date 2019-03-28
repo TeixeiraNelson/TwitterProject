@@ -1,7 +1,7 @@
 package ch.ribeiropython.twitterproject;
 
 import android.content.Intent;
-import androidx.appcompat.app.AppCompatActivity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
@@ -9,6 +9,12 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+
+import com.google.gson.Gson;
+
+import androidx.appcompat.app.AppCompatActivity;
+import ch.ribeiropython.twitterproject.entity.TweetDatabaseDeux;
+import ch.ribeiropython.twitterproject.entity.UserEntity;
 
 public class subscription_part3_Activity extends AppCompatActivity {
 
@@ -53,14 +59,14 @@ public class subscription_part3_Activity extends AppCompatActivity {
 
     public void startApp(View view){
         Bundle extras = getIntent().getExtras();
+        User user;
         if (extras != null) {
-            User user = (User) getIntent().getSerializableExtra("User");
+            user = (User) getIntent().getSerializableExtra("User");
             saveToDataBase(user);
+            saveUserToSession(user);
         }
 
-        /*
-        TODO : Save user to session
-         */
+
 
 
 
@@ -74,8 +80,23 @@ public class subscription_part3_Activity extends AppCompatActivity {
     }
 
     public void saveToDataBase(User user){
-        /*
-        TODO : PROGRAM THIS
-         */
+        TweetDatabaseDeux db = TweetDatabaseDeux.getAppDatabase(this);
+
+        UserEntity userEntity = new UserEntity(user.email,user.password,user.nickname);
+
+        db.UserDao().insert(userEntity);
+    }
+
+    public void saveUserToSession(User user){
+
+        Gson gson = new Gson();
+        String userInfoString = gson.toJson(user);
+
+
+
+        SharedPreferences.Editor editor = getSharedPreferences(getResources().getString(R.string.sharedPref), MODE_PRIVATE).edit();
+        editor.putString("user",userInfoString);
+        editor.apply();
+        editor.commit();
     }
 }

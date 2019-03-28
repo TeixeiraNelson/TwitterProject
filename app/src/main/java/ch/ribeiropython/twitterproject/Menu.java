@@ -33,6 +33,7 @@ public class Menu extends AppCompatActivity
     TweetDatabaseDeux db;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Initialisation de la page menu
@@ -48,9 +49,9 @@ public class Menu extends AppCompatActivity
         /* tweetsList.add(new oneTweet("nolsen", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat." , "#jeviensjamaisencours #acausedemamaindroite"));
          */
 
-       // TODO : Faire que sa le fasse  qu'au premier démarrage
+       // TODO : Faire que sa le fasse  qu'au premier démarrage        addTweetOndb();
 
-       addTweetOndb();
+
 
 
         /*ArrayList<TweetEntityDeux> listTweet = new ArrayList<>();

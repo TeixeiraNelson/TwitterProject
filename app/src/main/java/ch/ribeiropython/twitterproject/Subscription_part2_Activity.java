@@ -2,13 +2,15 @@ package ch.ribeiropython.twitterproject;
 
 import android.content.Intent;
 import android.graphics.Color;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import ch.ribeiropython.twitterproject.entity.TweetDatabaseDeux;
 
 public class Subscription_part2_Activity extends AppCompatActivity {
 
@@ -51,10 +53,15 @@ public class Subscription_part2_Activity extends AppCompatActivity {
     }
 
     private boolean verifyDatabaseNickname(String nickname){
-        /*
-        TODO : program that method.
-         */
-        return true;
+        TweetDatabaseDeux db = TweetDatabaseDeux.getAppDatabase(this);
+
+        String usersNickname = db.UserDao().getByNickname(nickname);
+
+        if(usersNickname!=null){
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public void launchSubPart3(View view) {

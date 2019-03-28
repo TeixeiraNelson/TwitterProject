@@ -1,11 +1,13 @@
 package ch.ribeiropython.twitterproject;
 
 import android.content.Intent;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import ch.ribeiropython.twitterproject.entity.TweetDatabaseDeux;
 
 public class SubscriptionActivity extends AppCompatActivity {
 
@@ -33,7 +35,7 @@ public class SubscriptionActivity extends AppCompatActivity {
         String userPassword = passwordInput.getText().toString();
         String userPassword2 = passwordInput2.getText().toString();
 
-        if(verifyEmailSyntax(userEmail)){
+        if(verifyEmailSyntax(userEmail) && verifyEmailInUse(userEmail)){
             if(verifyPasswords(userPassword, userPassword2)){
                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.valid_info), Toast.LENGTH_SHORT ).show();
                 User user = new User();
@@ -49,6 +51,19 @@ public class SubscriptionActivity extends AppCompatActivity {
         }
 
 
+
+    }
+
+    private boolean verifyEmailInUse(String userEmail) {
+        TweetDatabaseDeux db = TweetDatabaseDeux.getAppDatabase(this);
+
+        String usersEmail = db.UserDao().getByEmail(userEmail);
+
+        if(usersEmail!=null){
+            return false;
+        } else {
+            return true;
+        }
 
     }
 
