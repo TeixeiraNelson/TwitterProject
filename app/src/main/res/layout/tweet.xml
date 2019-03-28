@@ -10,6 +10,7 @@
         android:layout_margin="10dp"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:textColor="@color/redColor"
         android:text="Pseudo"/>
 
     <TextView
@@ -36,5 +37,16 @@
         android:text="#mabite"
         android:textColor="@color/design_default_color_primary_dark"
         android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="217dp"
+        android:layout_height="29dp"
+        android:layout_below="@+id/textView_tweet"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="194dp"
+        android:layout_marginTop="5dp"
+        android:visibility="invisible"
+        android:text="@string/italic_ClickToModify" />
 
 </RelativeLayout>

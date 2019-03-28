@@ -1,16 +1,12 @@
 package ch.ribeiropython.twitterproject;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,8 +33,7 @@ public class oneTweetAdapter extends ArrayAdapter<oneTweet> {
 
         final oneTweet currentMovie = tweetList.get(position);
 
-        TextView pseudo = (TextView) listItem.findViewById(R.id.textView_pseudo);
-        pseudo.setText(currentMovie.getPseudo());
+
 
         TextView tweet = (TextView) listItem.findViewById(R.id.textView_tweet);
         tweet.setText(currentMovie.getTweet());
@@ -46,19 +41,24 @@ public class oneTweetAdapter extends ArrayAdapter<oneTweet> {
         TextView hashtag = (TextView) listItem.findViewById(R.id.textView_hashtag);
         hashtag.setText(currentMovie.getHashtag());
 
-        SharedPreferences sharedPreferences = mContext.getSharedPreferences(mContext.getResources().getString(R.string.sharedPref),Context.MODE_PRIVATE);
+        User user = User.getUserSession(oneTweetAdapter.this.getContext());
 
-        String userString = sharedPreferences.getString("user",null);
+        TextView pseudo = (TextView) listItem.findViewById(R.id.textView_pseudo);
+        pseudo.setTextColor(mContext.getColor(R.color.redColor));
+        pseudo.setText(currentMovie.getPseudo());
 
-        Gson gson = new Gson();
-        final User user = gson.fromJson(userString, User.class);
+        if(user.nickname!=null)
+            if(user.nickname.equals(currentMovie.getPseudo())) {
 
-        listItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
+                pseudo.setTextColor(this.mContext.getResources().getColor(R.color.redColor));
+                TextView click = (TextView) listItem.findViewById(R.id.textView6);
+                click.setVisibility(View.VISIBLE);
 
-                if(user.nickname!=null)
-                    if(user.nickname.equals(currentMovie.getPseudo())){
+
+                listItem.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View arg0) {
+                        User user = User.getUserSession(oneTweetAdapter.this.getContext());
                         Intent intent = new Intent(mContext, TweetModifyActivity.class);
                         intent.putExtra(mContext.getString(R.string.Int_nickname), currentMovie.getPseudo());
                         intent.putExtra(mContext.getString(R.string.Int_hashtags), currentMovie.getHashtag());
@@ -66,11 +66,9 @@ public class oneTweetAdapter extends ArrayAdapter<oneTweet> {
                         intent.putExtra(mContext.getString(R.string.Int_idTweet), currentMovie.getIdTweet());
 
                         mContext.startActivity(intent);
-                        ((Activity) mContext).finish();
                     }
-
+                });
             }
-        });
         return listItem;
     }
 }

@@ -59,6 +59,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="56dp"
         android:text="Delete"
+        android:onClick="deleteTweet"
         android:backgroundTint="@android:color/holo_red_light"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -71,6 +72,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="56dp"
         android:text="Modify"
+        android:onClick="modifyTweet"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnDeleteTweet" />
 

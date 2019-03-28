@@ -40,4 +40,7 @@ public interface UserDao {
     @Query("SELECT * FROM users WHERE email = :email AND pass = :password")
     UserEntity getUserLogin (String email, String password);
 
+    @Query("SELECT idUserEntity FROM users WHERE nickname = :nickname")
+    int getUserId (String nickname);
+
 }

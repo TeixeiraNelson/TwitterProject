@@ -19,6 +19,7 @@ public class Tweet extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tweet);
 
+        User user = User.getUserSession(Tweet.this.getApplicationContext());
 
       /* ArrayList<TweetEntityDeux> listTweet = new ArrayList<>();
         listTweet.add(new TweetEntityDeux("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat.", 1 , "#2013 #mateub"));
@@ -57,9 +58,7 @@ public class Tweet extends AppCompatActivity {
       sendButton.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-              /*
-             TODO : Changer le user en dur et aller le chercher dans les shared Preferences.
-         */
+
 
               EditText tweetTxt = findViewById(R.id.txtTweetEdit);
               String msg = tweetTxt.getText().toString();
@@ -67,9 +66,18 @@ public class Tweet extends AppCompatActivity {
               EditText hashTags = findViewById(R.id.txtHashtagEdit);
               String hashtags = hashTags.getText().toString();
 
-              db = TweetDatabaseDeux.getAppDatabase(Tweet.this.getApplicationContext());
-              db.tweetDao().insertAll(new TweetEntityDeux(msg,1,hashtags));
 
+
+              User user = User.getUserSession(Tweet.this.getApplicationContext());
+
+              String nickname = user.nickname;
+
+
+
+              db = TweetDatabaseDeux.getAppDatabase(Tweet.this.getApplicationContext());
+
+              int idUser = db.UserDao().getUserId(nickname);
+              db.tweetDao().insertAll(new TweetEntityDeux(msg,idUser,hashtags));
               Intent intent = new Intent(Tweet.this.getApplicationContext(), Menu.class);
               startActivity(intent);
               finish();

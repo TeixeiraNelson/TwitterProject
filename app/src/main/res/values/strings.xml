@@ -31,7 +31,7 @@ Any use or reliance on any Content or materials posted via the Services or obtai
 
 
     <!-- Errors strings -->
-    <string name="invalid_email_syntax">Invalid Email syntax</string>
+    <string name="invalid_email_syntax">Invalid Email syntax or Email already in use</string>
     <string name="invalid_passwd_match">Passwords do not match</string>
     <string name="invalid_passwd_length">Passwords must have at least 6 characters</string>
     <string name="invalid_nickname">Nickname already in use</string>
@@ -46,5 +46,8 @@ Any use or reliance on any Content or materials posted via the Services or obtai
 
     <!-- SharedPrefName -->
     <string name="sharedPref">sharedPreferences_Name</string>
+
+    <!-- Tweet Strings -->
+    <string name="italic_ClickToModify"><i>(Click here to modify your tweet)</i></string>
 
 </resources>

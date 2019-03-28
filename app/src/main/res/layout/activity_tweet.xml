@@ -10,17 +10,19 @@
         android:id="@+id/textView4Edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="52dp"
-        android:layout_marginEnd="144dp"
-        android:text="Edit your Tweet"
+        android:layout_marginEnd="8dp"
+        android:text="Tweet"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txtUsername2Edit"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="19dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="68dp"
         android:text="Username"

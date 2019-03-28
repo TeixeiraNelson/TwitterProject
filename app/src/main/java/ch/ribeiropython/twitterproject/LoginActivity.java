@@ -1,5 +1,6 @@
 package ch.ribeiropython.twitterproject;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteConstraintException;
@@ -12,6 +13,8 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +37,33 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // initializeDB();
+        SharedPreferences.Editor editor = getSharedPreferences(getResources().getString(R.string.sharedPref), MODE_PRIVATE).edit();
+        editor.clear();
+        editor.apply();
+
+
+
+
+        File file = new File(getApplicationContext().getFilesDir(), "binFile.bin");
+
+        if(!file.exists()){
+            initializeDB();
+
+            String filename = "binFile.bin";
+            String fileContents = "App already launched once";
+            FileOutputStream outputStream;
+
+            try {
+                outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
+                outputStream.write(fileContents.getBytes());
+                outputStream.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+
+
 
 
         email = findViewById(R.id.txtEmail);
@@ -120,9 +149,9 @@ public class LoginActivity extends AppCompatActivity {
         boolean duplicates = false;
 
         ArrayList<UserEntity> listUser = new ArrayList<>();
-        listUser.add(new UserEntity("bonjour@test.com","test","Test1"));
-        listUser.add(new UserEntity("bonjour@test2.com","test2","Test2"));
-        listUser.add(new UserEntity("bonjour@test3.com","test3","Test3"));
+        listUser.add(new UserEntity("bonjour@test.com","test","The Tweeter Team"));
+        listUser.add(new UserEntity("bonjour@test2.com","test2","Nicolas78"));
+        listUser.add(new UserEntity("bonjour@test3.com","test3","Arthur_Brandon"));
 
         for (UserEntity user : listUser) {
             try {
@@ -135,18 +164,15 @@ public class LoginActivity extends AppCompatActivity {
 
 
         ArrayList<TweetEntityDeux> listTweet = new ArrayList<>();
-        listTweet.add(new TweetEntityDeux("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat.", 1 , "#2013 #mateub"));
-        listTweet.add(new TweetEntityDeux("Hey ho ho hey", 2 , "#super"));
-        listTweet.add(new TweetEntityDeux("Super nouveau tweet a moi heyheyhey", 3 , "#heyben"));
-        listTweet.add(new TweetEntityDeux("je viens de décrouvrir un nouveau réseau social !", 2 , "#2emeTweet #Inshalla"));
+        listTweet.add(new TweetEntityDeux("Hi people, here is the first tweet ever.", 1 , "#TwitterTeam"));
+        listTweet.add(new TweetEntityDeux("Hey people, what's up ?", 2 , "#super"));
+        listTweet.add(new TweetEntityDeux("J'ai mangé une pomme aujourd'hui.", 3 , "#heyben"));
+        listTweet.add(new TweetEntityDeux("Cool to be here !", 2 , "#2emeTweet"));
 
 
         for (TweetEntityDeux tweet : listTweet) {
             try {
-                db.tweetDao().insert(tweet);
-                //db.tweetDao().insertAll(new TweetEntityDeux(tweet.getMessage(),tweet.getIdUser(),tweet.getHashtags()));
-                System.out.println("Ce qu'il entre ===> Pseudo : "+tweet.getIdUser()+" message : "+tweet.getMessage()+" hastags : "+tweet.getHashtags()+" id tweet : "+tweet.getIdTweetEntity());
-
+                db.tweetDao().insertAll(new TweetEntityDeux(tweet.getMessage(),tweet.getIdUser(),tweet.getHashtags()));
             } catch (SQLiteConstraintException e) {
                 duplicates = true;
             }
