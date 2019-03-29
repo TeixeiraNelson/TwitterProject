@@ -41,9 +41,6 @@ public class LoginActivity extends AppCompatActivity {
         editor.clear();
         editor.apply();
 
-
-
-
         File file = new File(getApplicationContext().getFilesDir(), "binFile.bin");
 
         if(!file.exists()){

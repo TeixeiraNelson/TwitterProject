@@ -13,6 +13,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".TweetModifyActivity"></activity>
         <activity android:name=".subscription_part3_Activity" />
+        <activity android:name=".SearchHastagsActivity" />
         <activity android:name=".Subscription_part2_Activity" />
         <activity android:name=".Tweet" />
         <activity android:name=".EditSettingsActivity" />

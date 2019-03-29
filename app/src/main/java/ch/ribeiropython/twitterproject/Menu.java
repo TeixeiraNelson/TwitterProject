@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -29,69 +30,46 @@ public class Menu extends AppCompatActivity
     private oneTweetAdapter mAdapter;
     TweetDatabaseDeux db;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Initialisation de la page menu
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        ArrayList<oneTweet> tweetsList = new ArrayList<>();
+        // Récupère les extra pour savoir si il faut afficher tout les tweets ou uniquement ceux qui possède un hastags particulier
+        Bundle extras = getIntent().getExtras();
+        String hastagsSearch="";
+        int TweetByHastags=0;
+
+        if (extras != null) {
+            hastagsSearch = extras.getString("hastagsSearch");
+            TweetByHastags=1;
+            Toast.makeText(Menu.this,"Search with Hastags: "+ hastagsSearch, Toast.LENGTH_SHORT).show();
+        }
 
         //Récupère les tweets et les affiches dans le listview
+        ArrayList<oneTweet> tweetsList = new ArrayList<>();
         listViewTweet = (ListView) findViewById(R.id.listViewTweet);
-       // tweetsList.add(new oneTweet("Test pseudo 1", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat." , "#2013 #mateub"));
-        // tweetsList.add(new oneTweet("Gafundi", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat." , "#salouti #heyheyhey"));
-        /* tweetsList.add(new oneTweet("nolsen", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat." , "#jeviensjamaisencours #acausedemamaindroite"));
-         */
-
-
-        /*ArrayList<TweetEntityDeux> listTweet = new ArrayList<>();
-        listTweet.add(new TweetEntityDeux("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat.", 1 , "#2013 #mateub"));
-        listTweet.add(new TweetEntityDeux("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat.", 2 , "#2013 #mateub"));
-        listTweet.add(new TweetEntityDeux("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat.", 31 , "#2013 #mateub"));
-
-
-        db = TweetDatabaseDeux.getAppDatabase(this);
-
-        boolean duplicates = false;
-
-        for (TweetEntityDeux tweet : listTweet) {
-            try {
-               // db.tweetDao().insert(tweet);
-                //db.tweetDao().insertAll(new TweetEntityDeux(tweet.getMessage(),tweet.getIdUser(),tweet.getHashtags()));
-            } catch (SQLiteConstraintException e) {
-                duplicates = true;
-            }
-        }*/
-
-       // TweetDatabaseDeux db = TweetDatabaseDeux.getAppDatabase(this);
 
         //Charge les infos présente dans la base de données tweets
         db = TweetDatabaseDeux.getAppDatabase(this);
-        List<oneTweet> fruits = db.tweetDao().getAllTweetsWithUsername();
+        List<oneTweet> Tweets;
 
-        for (oneTweet fruit : fruits){
-          // Toast.makeText(Menu.this, fruit.getIdUser(), Toast.LENGTH_SHORT).show();
-            System.out.println("Affiche ===> Pseudo : "+fruit.getPseudo()+" message : "+fruit.getTweet()+" hastags : "+fruit.getHashtag()+" id tweet : "+fruit.getIdTweet());
-            tweetsList.add(new oneTweet(fruit.getPseudo(),fruit.getTweet() , fruit.getHashtag(), fruit.getIdTweet()));
+        if (TweetByHastags==0)
+            Tweets = db.tweetDao().getAllTweetsWithUsername();
+        else
+            Tweets = db.tweetDao().getAllTweetsByHastags(hastagsSearch);
+
+        //Ajoute a la liste les tweets récupéré
+        for (oneTweet tweet : Tweets){
+          // Toast.makeText(Menu.this, tweet.getIdUser(), Toast.LENGTH_SHORT).show();
+            System.out.println("Affiche ===> Pseudo : "+tweet.getPseudo()+" message : "+tweet.getTweet()+" hastags : "+tweet.getHashtag()+" id tweet : "+tweet.getIdTweet());
+            tweetsList.add(new oneTweet(tweet.getPseudo(),tweet.getTweet() , tweet.getHashtag(), tweet.getIdTweet()));
         }
-
-        //Charge les infos présente dans la base de données users
-       /* db2 = UserDatabase.getAppDatabase(this);
-        List<UserEntity> users = db2.UserDao().getAllUsers();
-
-        for (UserEntity fruit : users){
-            // Toast.makeText(Menu.this, fruit.getIdUser(), Toast.LENGTH_SHORT).show();
-            System.out.println("id user : "+fruit.getId()+"nickname : "+fruit.getNickname());
-        }*/
 
         //Ajoute la liste de tweet récupérer dans l'adapter
         mAdapter = new oneTweetAdapter(this,tweetsList);
         listViewTweet.setAdapter(mAdapter);
-
-
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -158,7 +136,8 @@ public class Menu extends AppCompatActivity
             Intent intent = new Intent(getApplicationContext(), Tweet.class);
             startActivity(intent);
         } else if (id == R.id.nav_hashtag) {
-            //envoyé vers nouveau hashtag
+            Intent intent = new Intent(getApplicationContext(), SearchHastagsActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_manage) {
             Intent intent = new Intent(getApplicationContext(), EditSettingsActivity.class);
