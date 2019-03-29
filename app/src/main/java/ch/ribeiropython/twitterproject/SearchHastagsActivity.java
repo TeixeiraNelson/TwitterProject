@@ -25,6 +25,7 @@ public class SearchHastagsActivity extends AppCompatActivity {
 
               EditText hashTags = findViewById(R.id.txtHastagsSearch);
               String hashtags = hashTags.getText().toString();
+              hashtags = hashtags.replaceAll("#","");
 
               db = TweetDatabaseDeux.getAppDatabase(SearchHastagsActivity.this.getApplicationContext());
 

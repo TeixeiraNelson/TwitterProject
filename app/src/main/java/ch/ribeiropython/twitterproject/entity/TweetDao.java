@@ -32,7 +32,7 @@ public interface TweetDao {
     @Query("SELECT * FROM tweets")
     List<TweetEntityDeux> getAllTweets();
 
-    @Query("SELECT u.nickname as pseudo,t.message as tweet,t.hashtags as hashtag, t.idTweetEntity as idTweet FROM tweets t,users u WHERE t.idUser = u.idUserEntity AND t.hashtags = :hastags ORDER BY t.idTweetEntity DESC")
+    @Query("SELECT u.nickname as pseudo,t.message as tweet,t.hashtags as hashtag, t.idTweetEntity as idTweet FROM tweets t,users u WHERE t.idUser = u.idUserEntity AND instr(t.hashtags,:hastags) > 1  ORDER BY t.idTweetEntity DESC")
     List<oneTweet> getAllTweetsByHastags(String hastags);
 
     @Query("SELECT u.nickname as pseudo,t.message as tweet,t.hashtags as hashtag, t.idTweetEntity as idTweet FROM tweets t,users u WHERE t.idUser = u.idUserEntity ORDER BY t.idTweetEntity DESC")
