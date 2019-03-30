@@ -29,7 +29,6 @@ public class LoginActivity extends AppCompatActivity {
     private TextView sub;
     private TweetDatabaseDeux db;
 
-
     private Button btnLogin;
 
     @Override
@@ -60,14 +59,10 @@ public class LoginActivity extends AppCompatActivity {
 
         }
 
-
-
-
         email = findViewById(R.id.txtEmail);
         password = findViewById(R.id.txtPassword);
         btnLogin = findViewById(R.id.btnLogin);
         sub = findViewById(R.id.txtSub);
-
 
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -108,12 +103,9 @@ public class LoginActivity extends AppCompatActivity {
 
         TweetDatabaseDeux db = TweetDatabaseDeux.getAppDatabase(this);
 
-
-
         List<UserEntity> users = db.UserDao().getAllUsers();
 
         for (UserEntity fruit : users){
-            // Toast.makeText(Menu.this, fruit.getIdUser(), Toast.LENGTH_SHORT).show();
             System.out.println("email : "+fruit.getEmail()+"pwd : "+fruit.getPass());
         }
 
@@ -128,8 +120,6 @@ public class LoginActivity extends AppCompatActivity {
             userc.password = user.getPass();
 
             String userInfoString = gson.toJson(userc);
-
-
 
             SharedPreferences.Editor editor = getSharedPreferences(getResources().getString(R.string.sharedPref), MODE_PRIVATE).edit();
             editor.putString("user",userInfoString);
@@ -153,7 +143,6 @@ public class LoginActivity extends AppCompatActivity {
         for (UserEntity user : listUser) {
             try {
                 db.UserDao().insert(new UserEntity(user.getEmail(),user.getPass(),user.getNickname()));
-                //db.tweetDao().insertAll(new TweetEntityDeux(tweet.getMessage(),tweet.getIdUser(),tweet.getHashtags()));
             } catch (SQLiteConstraintException e) {
                 duplicates = true;
             }

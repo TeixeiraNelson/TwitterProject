@@ -31,7 +31,7 @@ public interface UserDao {
     @Query("SELECT * FROM users")
     List<UserEntity> getAllUsers();
 
-     @Query("SELECT email FROM users WHERE email = :email")
+    @Query("SELECT email FROM users WHERE email = :email")
     String getByEmail(String email);
 
     @Query("SELECT nickname FROM users WHERE nickname = :nickname")
@@ -42,6 +42,9 @@ public interface UserDao {
 
     @Query("SELECT idUserEntity FROM users WHERE nickname = :nickname")
     int getUserId (String nickname);
+
+    @Query("SELECT count(*) FROM users WHERE email = :email")
+    int nbEmail (String email);
 
     @Query("UPDATE users SET email = :email WHERE idUserEntity = :iduser")
     void updateEmail(String email, int iduser);

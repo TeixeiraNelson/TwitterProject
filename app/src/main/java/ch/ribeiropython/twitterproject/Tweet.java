@@ -23,43 +23,9 @@ public class Tweet extends AppCompatActivity {
 
         username = findViewById(R.id.txtUsernameNew);
 
-
         User user = User.getUserSession(Tweet.this.getApplicationContext());
 
         username.setText(user.nickname);
-
-      /* ArrayList<TweetEntityDeux> listTweet = new ArrayList<>();
-        listTweet.add(new TweetEntityDeux("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat.", 1 , "#2013 #mateub"));
-        listTweet.add(new TweetEntityDeux("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat.", 2 , "#2013 #mateub"));
-        listTweet.add(new TweetEntityDeux("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat.", 31 , "#2013 #mateub"));
-
-        db = TweetDatabaseDeux.getAppDatabase(this);
-
-        boolean duplicates = false;
-
-        for (TweetEntityDeux tweet : listTweet) {
-            try {
-                db.tweetDao().insert(tweet);
-            } catch (SQLiteConstraintException e) {
-                duplicates = true;
-            }
-        }
-
-        TweetDatabaseDeux db = TweetDatabaseDeux.getAppDatabase(this);
-
-        List<TweetEntityDeux> fruits = db.tweetDao().getAllTweets();
-        List<TweetEntityDeux> array = new ArrayList<>();
-
-        List<oneTweet> tgg = new ArrayList<>();
-        for (TweetEntityDeux fruit : fruits) {
-            array.add(fruit);
-
-        }
-
-
-        System.out.println(array);
-        */
-
 
       Button sendButton = findViewById(R.id.btnDeleteTweet);
       sendButton.setOnClickListener(new View.OnClickListener() {

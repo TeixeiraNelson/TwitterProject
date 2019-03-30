@@ -48,6 +48,6 @@ Any use or reliance on any Content or materials posted via the Services or obtai
     <string name="sharedPref">sharedPreferences_Name</string>
 
     <!-- Tweet Strings -->
-    <string name="italic_ClickToModify"><i>(Click here to modify your tweet)</i></string>
+    <string name="italic_ClickToModify"><i>(Click here to edit)</i></string>
 
 </resources>

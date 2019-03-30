@@ -10,24 +10,24 @@
         android:id="@+id/textView4Edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:layout_marginBottom="59dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginBottom="79dp"
         android:text="Tweet"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/textView3"
+        app:layout_constraintBottom_toTopOf="@+id/txtUsernameNew"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txtUsernameNew"
-        android:layout_width="87dp"
-        android:layout_height="25dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginBottom="56dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="24dp"
         android:text="Username"
-        app:layout_constraintBottom_toTopOf="@+id/txtTweetEdit"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/textView3"
+        app:layout_constraintEnd_toEndOf="@+id/textView3"
+        app:layout_constraintStart_toStartOf="@+id/textView3"
         app:layout_constraintTop_toBottomOf="@+id/textView4Edit" />
 
     <EditText
@@ -35,16 +35,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="14dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="497dp"
+        android:layout_marginBottom="59dp"
         android:ems="10"
         android:hint="Tweet"
         android:inputType="textMultiLine"
         android:maxLength="120"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/txtHashtagEdit"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
@@ -54,7 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="332dp"
+        android:layout_marginBottom="284dp"
         android:ems="10"
         android:hint="Hashtag"
         android:inputType="textPersonName"
@@ -67,23 +65,22 @@
         android:id="@+id/btnDeleteTweet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="9dp"
+        android:layout_marginEnd="29dp"
+        android:layout_marginBottom="166dp"
         android:text="SEND"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTweetEdit" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
-        android:layout_height="28dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginBottom="19dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="55dp"
         android:text="A tweet can have only 120 characters max."
         android:textStyle="italic"
         app:layout_constraintBottom_toTopOf="@+id/txtTweetEdit"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4Edit" />
+        app:layout_constraintTop_toBottomOf="@+id/txtUsernameNew" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

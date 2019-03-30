@@ -31,26 +31,24 @@ public class oneTweetAdapter extends ArrayAdapter<oneTweet> {
         if(listItem == null)
             listItem = LayoutInflater.from(mContext).inflate(R.layout.tweet,parent,false);
 
-        final oneTweet currentMovie = tweetList.get(position);
-
-
+        final oneTweet currentTweet = tweetList.get(position);
 
         TextView tweet = (TextView) listItem.findViewById(R.id.textView_tweet);
-        tweet.setText(currentMovie.getTweet());
+        tweet.setText(currentTweet.getTweet());
 
         TextView hashtag = (TextView) listItem.findViewById(R.id.textView_hashtag);
-        hashtag.setText(currentMovie.getHashtag());
+        hashtag.setText(currentTweet.getHashtag());
 
         User user = User.getUserSession(oneTweetAdapter.this.getContext());
 
         TextView pseudo = (TextView) listItem.findViewById(R.id.textView_pseudo);
         pseudo.setTextColor(mContext.getColor(R.color.redColor));
-        pseudo.setText(currentMovie.getPseudo());
+        pseudo.setText(currentTweet.getPseudo());
 
         if(user.nickname!=null)
-            if(user.nickname.equals(currentMovie.getPseudo())) {
+            if(user.nickname.equals(currentTweet.getPseudo())) {
 
-                pseudo.setTextColor(this.mContext.getResources().getColor(R.color.redColor));
+                //pseudo.setTextColor(this.mContext.getResources().getColor(R.color.redColor));
                 TextView click = (TextView) listItem.findViewById(R.id.textView6);
                 click.setVisibility(View.VISIBLE);
 
@@ -60,10 +58,10 @@ public class oneTweetAdapter extends ArrayAdapter<oneTweet> {
                     public void onClick(View arg0) {
                         User user = User.getUserSession(oneTweetAdapter.this.getContext());
                         Intent intent = new Intent(mContext, TweetModifyActivity.class);
-                        intent.putExtra(mContext.getString(R.string.Int_nickname), currentMovie.getPseudo());
-                        intent.putExtra(mContext.getString(R.string.Int_hashtags), currentMovie.getHashtag());
-                        intent.putExtra(mContext.getString(R.string.Int_tweet), currentMovie.getTweet());
-                        intent.putExtra(mContext.getString(R.string.Int_idTweet), currentMovie.getIdTweet());
+                        intent.putExtra(mContext.getString(R.string.Int_nickname), currentTweet.getPseudo());
+                        intent.putExtra(mContext.getString(R.string.Int_hashtags), currentTweet.getHashtag());
+                        intent.putExtra(mContext.getString(R.string.Int_tweet), currentTweet.getTweet());
+                        intent.putExtra(mContext.getString(R.string.Int_idTweet), currentTweet.getIdTweet());
 
                         mContext.startActivity(intent);
                     }

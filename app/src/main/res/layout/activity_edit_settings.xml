@@ -92,6 +92,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
         android:text="Change password"
+        android:onClick="ChangePassword"
         app:layout_constraintStart_toStartOf="@+id/txtNewPassword2"
         app:layout_constraintTop_toBottomOf="@+id/txtNewPassword2" />
 

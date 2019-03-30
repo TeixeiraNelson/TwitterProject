@@ -23,9 +23,18 @@ public class EditSettingsActivity extends AppCompatActivity {
         User user = User.getUserSession(this.getApplicationContext());
 
         int userId = db.UserDao().getUserId(user.nickname);
-        db.UserDao().updateEmail(email.getText().toString(), userId);
-        Toast.makeText(EditSettingsActivity.this, "Email updated.", Toast.LENGTH_SHORT).show();
-        EditSettingsActivity.this.finish();
+        if(db.UserDao().nbEmail(email.getText().toString())==0)
+        {
+            db.UserDao().updateEmail(email.getText().toString(), userId);
+            Toast.makeText(EditSettingsActivity.this, "Email updated.", Toast.LENGTH_SHORT).show();
+            EditSettingsActivity.this.finish();
+        }
+        else
+        {
+            Toast.makeText(EditSettingsActivity.this, "Email all ready use.", Toast.LENGTH_SHORT).show();
+        }
+
+
     }
 
     public void ChangePassword (View o){
