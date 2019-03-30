@@ -43,4 +43,9 @@ public interface UserDao {
     @Query("SELECT idUserEntity FROM users WHERE nickname = :nickname")
     int getUserId (String nickname);
 
+    @Query("UPDATE users SET email = :email WHERE idUserEntity = :iduser")
+    void updateEmail(String email, int iduser);
+
+    @Query("UPDATE users SET pass = :pass WHERE idUserEntity = :userId")
+    void updatePassword(int userId, String pass);
 }

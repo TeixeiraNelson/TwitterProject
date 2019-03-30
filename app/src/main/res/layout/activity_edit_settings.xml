@@ -46,6 +46,8 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="56dp"
         android:hint="Change Email"
+        android:onClick="ChangeEmail"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="@+id/txtEmail"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtEmail" />
