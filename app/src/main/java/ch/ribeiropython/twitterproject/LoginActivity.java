@@ -40,6 +40,8 @@ public class LoginActivity extends AppCompatActivity {
         editor.clear();
         editor.apply();
 
+
+
         File file = new File(getApplicationContext().getFilesDir(), "binFile.bin");
 
         if(!file.exists()){
@@ -92,6 +94,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 Intent intentMyAccount = new Intent(getApplicationContext(), SubscriptionActivity.class);
                 startActivity(intentMyAccount);
+
 
             }
         });

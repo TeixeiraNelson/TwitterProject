@@ -45,6 +45,9 @@ public class oneTweetAdapter extends ArrayAdapter<oneTweet> {
         pseudo.setTextColor(mContext.getColor(R.color.redColor));
         pseudo.setText(currentTweet.getPseudo());
 
+
+        System.out.println("nick : " + user.nickname + " pseudo : " + currentTweet.getPseudo());
+
         if(user.nickname!=null)
             if(user.nickname.equals(currentTweet.getPseudo())) {
 
@@ -67,6 +70,7 @@ public class oneTweetAdapter extends ArrayAdapter<oneTweet> {
                     }
                 });
             }
+
         return listItem;
     }
 }

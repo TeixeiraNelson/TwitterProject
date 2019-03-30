@@ -17,6 +17,9 @@ public class EditSettingsActivity extends AppCompatActivity {
     }
 
     public void ChangeEmail (View o){
+        /*
+            Méthode appelée par le bouton
+         */
         EditText email = findViewById(R.id.txtEmail);
 
         TweetDatabaseDeux db = TweetDatabaseDeux.getAppDatabase(this);
