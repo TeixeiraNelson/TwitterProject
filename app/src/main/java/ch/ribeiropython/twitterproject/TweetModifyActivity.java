@@ -48,13 +48,10 @@ public class TweetModifyActivity extends AppCompatActivity {
     }
 
     public void deleteTweet(View o){
-        Intent intent = getIntent();
         User user = User.getUserSession(this.getApplicationContext());
 
         TweetDatabaseDeux db = TweetDatabaseDeux.getAppDatabase(this);
-        int userId = db.UserDao().getUserId(user.nickname);
-        TweetEntityDeux tweetToDelete = new TweetEntityDeux(tweetSt,userId,hashtagsSt);
-        db.tweetDao().delete(tweetToDelete);
+        db.tweetDao().deleteTweet(Integer.valueOf(idTweet));
 
         this.finish();
     }

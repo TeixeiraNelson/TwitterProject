@@ -29,6 +29,9 @@ public interface TweetDao {
     @Query("DELETE FROM tweets")
     void deleteAllTweetEntity();
 
+    @Query("DELETE FROM tweets WHERE idTweetEntity = :idTweet")
+    void deleteTweet(int idTweet);
+
     @Query("SELECT * FROM tweets")
     List<TweetEntityDeux> getAllTweets();
 
