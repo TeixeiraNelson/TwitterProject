@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import ch.ribeiropython.twitterproject.entity.TweetDatabaseDeux;
@@ -13,13 +14,19 @@ import ch.ribeiropython.twitterproject.entity.TweetEntityDeux;
 public class Tweet extends AppCompatActivity {
 
     TweetDatabaseDeux db;
+    private TextView username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tweet);
 
+        username = findViewById(R.id.txtUsernameNew);
+
+
         User user = User.getUserSession(Tweet.this.getApplicationContext());
+
+        username.setText(user.nickname);
 
       /* ArrayList<TweetEntityDeux> listTweet = new ArrayList<>();
         listTweet.add(new TweetEntityDeux("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet quam nec felis tempor tempor eget congue risus. Suspendisse ac ornare metus, vel volutpat.", 1 , "#2013 #mateub"));

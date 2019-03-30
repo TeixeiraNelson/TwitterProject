@@ -36,20 +36,7 @@ public class Menu extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        // Récupère les extra pour savoir si il faut afficher tout les tweets ou uniquement ceux qui possède un hastags particulier
-        Bundle extras = getIntent().getExtras();
-        String hastagsSearch="";
-        int TweetByHastags=0;
-
-        if (extras != null) {
-            hastagsSearch = extras.getString("hastagsSearch");
-            TweetByHastags=1;
-            Toast.makeText(Menu.this,"Search with Hastags: "+ hastagsSearch, Toast.LENGTH_SHORT).show();
-        }
-
-        //Ajoute la liste de tweet récupérer dans l'adapter
-        mAdapter = new oneTweetAdapter(this,getListTweet(TweetByHastags,hastagsSearch));
-        listViewTweet.setAdapter(mAdapter);
+        LoadTweets();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -74,12 +61,29 @@ public class Menu extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    private void LoadTweets() {
+
+        // Récupère les extra pour savoir si il faut afficher tout les tweets ou uniquement ceux qui possède un hastags particulier
+        Bundle extras = getIntent().getExtras();
+        String hastagsSearch="";
+        int TweetByHastags=0;
+
+        if (extras != null) {
+            hastagsSearch = extras.getString("hastagsSearch");
+            TweetByHastags=1;
+            Toast.makeText(Menu.this,"Search with Hastags: "+ hastagsSearch, Toast.LENGTH_SHORT).show();
+        }
+
+        //Ajoute la liste de tweet récupérer dans l'adapter
+        mAdapter = new oneTweetAdapter(this,getListTweet(TweetByHastags,hastagsSearch));
+        listViewTweet.setAdapter(mAdapter);
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
 
-        mAdapter = new oneTweetAdapter(this,getListTweet(0,""));
-        listViewTweet.setAdapter(mAdapter);
+        LoadTweets();
 
     }
 
