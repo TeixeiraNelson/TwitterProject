@@ -18,25 +18,19 @@ public class SubscriptionActivity extends AppCompatActivity {
     }
 
     public void checkInputs(View view) {
-        /*
-        Checks the user inputs before sending information to the next step
-         */
 
-        /*
-        Checking Email
-         */
-
+        //get the informations from the xml file
         EditText emailInput = findViewById(R.id.inscr_emailInput);
-
         EditText passwordInput = findViewById(R.id.inscr_passwdInput);
         EditText passwordInput2 = findViewById(R.id.inscr_passwdInput2);
-
         String userEmail = emailInput.getText().toString();
         String userPassword = passwordInput.getText().toString();
         String userPassword2 = passwordInput2.getText().toString();
 
+        //Check if the email is good or not
         if(verifyEmailSyntax(userEmail) && verifyEmailInUse(userEmail)){
             if(verifyPasswords(userPassword, userPassword2)){
+                //If okay go to the next activity
                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.valid_info), Toast.LENGTH_SHORT ).show();
                 User user = new User();
                 user.email = userEmail;
@@ -47,6 +41,7 @@ public class SubscriptionActivity extends AppCompatActivity {
                 finish();
             }
         } else {
+            //If no you have to change the email
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.invalid_email_syntax), Toast.LENGTH_SHORT ).show();
         }
 
@@ -55,8 +50,10 @@ public class SubscriptionActivity extends AppCompatActivity {
     }
 
     private boolean verifyEmailInUse(String userEmail) {
-        TweetDatabaseDeux db = TweetDatabaseDeux.getAppDatabase(this);
 
+        //check if the user is all ready use
+
+        TweetDatabaseDeux db = TweetDatabaseDeux.getAppDatabase(this);
         String usersEmail = db.UserDao().getByEmail(userEmail);
 
         if(usersEmail!=null){
@@ -77,6 +74,7 @@ public class SubscriptionActivity extends AppCompatActivity {
 
     private boolean verifyPasswords ( String password, String password2){
 
+        //Check if the password has more or egal than 6 caractères
         if(password.equals(password2)){
             if(password.length()>=6){
                 return true;

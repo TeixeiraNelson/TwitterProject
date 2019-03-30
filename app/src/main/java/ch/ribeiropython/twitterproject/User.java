@@ -15,8 +15,10 @@ public class User implements Serializable {
     public static User getUserSession(Context mContext) {
         SharedPreferences sharedPreferences = mContext.getSharedPreferences(mContext.getResources().getString(R.string.sharedPref), Context.MODE_PRIVATE);
 
+        // add the user on the sharedPreferences so we can know which user is connected on the application
         String userString = sharedPreferences.getString("user",null);
 
+        //Change the object to a string so we can stock in the sharedPreferences
         Gson gson = new Gson();
         User user = gson.fromJson(userString, User.class);
         return user;

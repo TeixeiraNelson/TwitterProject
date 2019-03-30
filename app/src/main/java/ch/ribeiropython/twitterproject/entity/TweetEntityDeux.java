@@ -24,6 +24,7 @@ public class TweetEntityDeux {
 
     public TweetEntityDeux(String message, int idUser, String hashtags) {
 
+        //Check if the tweet is shorter than 120 caractere
         if(message.length()<=120)
             this.message = message;
         else
@@ -47,6 +48,7 @@ public class TweetEntityDeux {
     }
 
     public void setMessage(String message) {
+        //Check if the tweet is shorter than 120 caractere
         if(message.length()<=120)
             this.message = message;
         else

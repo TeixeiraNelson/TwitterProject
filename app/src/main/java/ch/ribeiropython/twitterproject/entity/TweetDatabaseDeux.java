@@ -14,6 +14,7 @@ public abstract class TweetDatabaseDeux extends RoomDatabase {
     // For Singleton instantiation
     private static final Object LOCK = new Object();
 
+    //Declare the two Dao
     public abstract TweetDao tweetDao();
     public abstract UserDao UserDao();
 
@@ -22,16 +23,6 @@ public abstract class TweetDatabaseDeux extends RoomDatabase {
             synchronized (LOCK) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(), TweetDatabaseDeux.class, "tweet-database")
-                            /*
-                            allow queries on the main thread.
-                            Don't do this in a real app!
-                            See PersistenceBasicSample
-                            https://github.com/googlesamples/android-architecture-components/tree/master/BasicSample
-                            for an example.
-
-                            Would throw java.lang.IllegalStateException:
-                            Cannot access database on the main thread since it may potentially lock the UI for a long period of time.
-                            */
                             .allowMainThreadQueries()
                             .build();
                 }
