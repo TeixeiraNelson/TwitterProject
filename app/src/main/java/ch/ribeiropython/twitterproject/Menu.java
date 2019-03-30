@@ -47,28 +47,8 @@ public class Menu extends AppCompatActivity
             Toast.makeText(Menu.this,"Search with Hastags: "+ hastagsSearch, Toast.LENGTH_SHORT).show();
         }
 
-        //Récupère les tweets et les affiches dans le listview
-        ArrayList<oneTweet> tweetsList = new ArrayList<>();
-        listViewTweet = (ListView) findViewById(R.id.listViewTweet);
-
-        //Charge les infos présente dans la base de données tweets
-        db = TweetDatabaseDeux.getAppDatabase(this);
-        List<oneTweet> Tweets;
-
-        if (TweetByHastags==0)
-            Tweets = db.tweetDao().getAllTweetsWithUsername();
-        else
-            Tweets = db.tweetDao().getAllTweetsByHastags(hastagsSearch);
-
-        //Ajoute a la liste les tweets récupéré
-        for (oneTweet tweet : Tweets){
-          // Toast.makeText(Menu.this, tweet.getIdUser(), Toast.LENGTH_SHORT).show();
-            System.out.println("Affiche ===> Pseudo : "+tweet.getPseudo()+" message : "+tweet.getTweet()+" hastags : "+tweet.getHashtag()+" id tweet : "+tweet.getIdTweet());
-            tweetsList.add(new oneTweet(tweet.getPseudo(),tweet.getTweet() , tweet.getHashtag(), tweet.getIdTweet()));
-        }
-
         //Ajoute la liste de tweet récupérer dans l'adapter
-        mAdapter = new oneTweetAdapter(this,tweetsList);
+        mAdapter = new oneTweetAdapter(this,getListTweet(TweetByHastags,hastagsSearch));
         listViewTweet.setAdapter(mAdapter);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -94,6 +74,38 @@ public class Menu extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        mAdapter = new oneTweetAdapter(this,getListTweet(0,""));
+        listViewTweet.setAdapter(mAdapter);
+
+    }
+
+    public ArrayList<oneTweet> getListTweet(int TweetByHastags,String hastagsSearch)
+    {
+        ArrayList<oneTweet> tweetsList = new ArrayList<>();
+        listViewTweet = (ListView) findViewById(R.id.listViewTweet);
+
+        //Charge les infos présente dans la base de données tweets
+        db = TweetDatabaseDeux.getAppDatabase(this);
+        List<oneTweet> Tweets;
+
+        if (TweetByHastags==0)
+            Tweets = db.tweetDao().getAllTweetsWithUsername();
+        else
+            Tweets = db.tweetDao().getAllTweetsByHastags(hastagsSearch);
+
+        //Ajoute a la liste les tweets récupéré
+        for (oneTweet tweet : Tweets){
+            // Toast.makeText(Menu.this, tweet.getIdUser(), Toast.LENGTH_SHORT).show();
+            System.out.println("Affiche ===> Pseudo : "+tweet.getPseudo()+" message : "+tweet.getTweet()+" hastags : "+tweet.getHashtag()+" id tweet : "+tweet.getIdTweet());
+            tweetsList.add(new oneTweet(tweet.getPseudo(),tweet.getTweet() , tweet.getHashtag(), tweet.getIdTweet()));
+        }
+
+        return tweetsList;
+    }
 
     @Override
     public void onBackPressed() {
