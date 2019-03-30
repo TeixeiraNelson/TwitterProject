@@ -24,6 +24,8 @@ public class EditSettingsActivity extends AppCompatActivity {
 
         int userId = db.UserDao().getUserId(user.nickname);
         db.UserDao().updateEmail(email.getText().toString(), userId);
+        Toast.makeText(EditSettingsActivity.this, "Email updated.", Toast.LENGTH_SHORT).show();
+        EditSettingsActivity.this.finish();
     }
 
     public void ChangePassword (View o){
@@ -37,6 +39,10 @@ public class EditSettingsActivity extends AppCompatActivity {
                 TweetDatabaseDeux db = TweetDatabaseDeux.getAppDatabase(this);
                 int userId = db.UserDao().getUserId(user.nickname);
                 db.UserDao().updatePassword(userId, Password1.getText().toString());
+                Toast.makeText(EditSettingsActivity.this, "Password updated.", Toast.LENGTH_SHORT).show();
+                EditSettingsActivity.this.finish();
+
+
 
             } else {
                 Toast.makeText(EditSettingsActivity.this, "New passwords don't match.", Toast.LENGTH_SHORT).show();
