@@ -18,7 +18,7 @@ public class TweetModifyActivity extends AppCompatActivity {
     private String usernameSt;
     private String tweetSt;
     private String hashtagsSt;
-    private String idTweet;
+    private int idTweet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +34,7 @@ public class TweetModifyActivity extends AppCompatActivity {
         usernameSt = intent.getStringExtra(getResources().getString(R.string.Int_nickname));
         tweetSt = intent.getStringExtra(getResources().getString(R.string.Int_tweet));
         hashtagsSt = intent.getStringExtra(getResources().getString(R.string.Int_hashtags));
-        idTweet = intent.getStringExtra(getResources().getString(R.string.Int_idTweet));
+        idTweet = intent.getIntExtra(getResources().getString(R.string.Int_idTweet),0);
 
         username.setText(usernameSt);
         tweet.setText(tweetSt);
@@ -51,6 +51,7 @@ public class TweetModifyActivity extends AppCompatActivity {
         User user = User.getUserSession(this.getApplicationContext());
 
         TweetDatabaseDeux db = TweetDatabaseDeux.getAppDatabase(this);
+
         db.tweetDao().deleteTweet(Integer.valueOf(idTweet));
 
         this.finish();
@@ -66,6 +67,13 @@ public class TweetModifyActivity extends AppCompatActivity {
         TweetDatabaseDeux db = TweetDatabaseDeux.getAppDatabase(this);
         int userId = db.UserDao().getUserId(user.nickname);
         TweetEntityDeux tweetToUpdate = new TweetEntityDeux(tweetSt,userId,hashtagsSt);
+
+        tweetToUpdate.setIdTweetEntity(idTweet);
+
+        tweetToUpdate.setMessage(tweet.getText().toString());
+        tweetToUpdate.setHashtags(hashtags.getText().toString());
+
+        System.out.println("idTweet : " + idTweet + " msg : " + tweetSt + " hashtags : " + hashtags + "user ID: " + userId);
         db.tweetDao().update(tweetToUpdate);
 
         this.finish();

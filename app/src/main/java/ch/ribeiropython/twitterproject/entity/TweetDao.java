@@ -11,6 +11,8 @@ import androidx.room.Query;
 import androidx.room.Update;
 import ch.ribeiropython.twitterproject.oneTweet;
 
+import static androidx.room.OnConflictStrategy.REPLACE;
+
 @Dao
 public interface TweetDao {
 
@@ -20,7 +22,7 @@ public interface TweetDao {
     @Insert
     void insertAll(TweetEntityDeux... Tweets) throws SQLiteConstraintException;
 
-    @Update
+    @Update(onConflict = REPLACE)
     void update(TweetEntityDeux tweetEntity);
 
     @Delete
