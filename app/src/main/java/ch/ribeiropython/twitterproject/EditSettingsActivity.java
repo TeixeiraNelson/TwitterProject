@@ -18,7 +18,10 @@ public class EditSettingsActivity extends AppCompatActivity {
 
     public void ChangeEmail (View o){
         /*
-            Méthode appelée par le bouton
+            Method that is called by the button to change the email in the settings activity
+            The method will update the new email of the user in the database.
+
+            it checkes also the email syntax.
          */
         EditText email = findViewById(R.id.txtEmail);
 
@@ -28,9 +31,14 @@ public class EditSettingsActivity extends AppCompatActivity {
         int userId = db.UserDao().getUserId(user.nickname);
         if(db.UserDao().nbEmail(email.getText().toString())==0)
         {
-            db.UserDao().updateEmail(email.getText().toString(), userId);
-            Toast.makeText(EditSettingsActivity.this, "Email updated.", Toast.LENGTH_SHORT).show();
-            EditSettingsActivity.this.finish();
+            if(android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches()){
+                db.UserDao().updateEmail(email.getText().toString(), userId);
+                Toast.makeText(EditSettingsActivity.this, "Email updated.", Toast.LENGTH_SHORT).show();
+                EditSettingsActivity.this.finish();
+            } else {
+                Toast.makeText(EditSettingsActivity.this, "Email syntax incorrect.", Toast.LENGTH_SHORT).show();
+            }
+
         }
         else
         {
@@ -41,6 +49,12 @@ public class EditSettingsActivity extends AppCompatActivity {
     }
 
     public void ChangePassword (View o){
+
+        /*
+            Method called by the change password button, that updates the new password of the user in the database
+
+           The method verifies as well that both passwords match and that the actual password is correct.
+         */
         EditText actualPassword = findViewById(R.id.txtOldPassword);
         EditText Password1 = findViewById(R.id.txtNewPassword);
         EditText Password2 = findViewById(R.id.txtNewPassword2);

@@ -32,16 +32,17 @@ public class Menu extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Initialisation de la page menu
+        // Initializing menu page
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
+        // Loading tweets
         LoadTweets();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //Si on clique sur le bouton rond en bas ca lance l'activité qui permet d'envoyer un nouveau tweet
+        // Action to start activity to send a new tweet
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,7 +64,7 @@ public class Menu extends AppCompatActivity
 
     private void LoadTweets() {
 
-        // Récupère les extra pour savoir si il faut afficher tout les tweets ou uniquement ceux qui possède un hastags particulier
+        // getting extras to know if it has to print all tweets or just those that have a particular hashtag.
         Bundle extras = getIntent().getExtras();
         String hastagsSearch="";
         int TweetByHastags=0;
@@ -74,11 +75,12 @@ public class Menu extends AppCompatActivity
             Toast.makeText(Menu.this,"Search with Hastags: "+ hastagsSearch, Toast.LENGTH_SHORT).show();
         }
 
-        //Ajoute la liste de tweet récupérer dans l'adapter
+        //adds tweet list to the adapter
         mAdapter = new oneTweetAdapter(this,getListTweet(TweetByHastags,hastagsSearch));
         listViewTweet.setAdapter(mAdapter);
     }
 
+    // method to refresh the activity
     @Override
     protected void onResume() {
         super.onResume();
@@ -87,6 +89,10 @@ public class Menu extends AppCompatActivity
 
     }
 
+
+    /*
+    Method to get a tweet list by hashtag
+     */
     public ArrayList<oneTweet> getListTweet(int TweetByHastags,String hastagsSearch)
     {
         ArrayList<oneTweet> tweetsList = new ArrayList<>();

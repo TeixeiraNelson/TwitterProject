@@ -13,6 +13,10 @@ public class SearchHastagsActivity extends AppCompatActivity {
 
     TweetDatabaseDeux db;
 
+    /*
+        Activity that handles the search by hashtag.
+    */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +26,8 @@ public class SearchHastagsActivity extends AppCompatActivity {
         btnSearchHastags.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
+
+
 
               EditText hashTags = findViewById(R.id.txtHastagsSearch);
               String hashtags = hashTags.getText().toString();

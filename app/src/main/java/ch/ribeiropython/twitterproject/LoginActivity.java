@@ -16,7 +16,6 @@ import com.google.gson.Gson;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 import ch.ribeiropython.twitterproject.entity.TweetDatabaseDeux;
@@ -36,12 +35,15 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
+        // Clearing shared preferences on start
         SharedPreferences.Editor editor = getSharedPreferences(getResources().getString(R.string.sharedPref), MODE_PRIVATE).edit();
         editor.clear();
         editor.apply();
 
 
 
+        // Creating a random file to make sure that the initializeDB method is called only once, at the first time the app runs.
         File file = new File(getApplicationContext().getFilesDir(), "binFile.bin");
 
         if(!file.exists()){
@@ -67,6 +69,7 @@ public class LoginActivity extends AppCompatActivity {
         sub = findViewById(R.id.txtSub);
 
 
+        // Setting action to login button, verifies user in the database
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,6 +91,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        // Setting action to subscribe button, starting new activity.
         sub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,16 +106,10 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    // method that checks the user in the database.
     protected boolean checkUserLogin (String email, String pwd){
 
         TweetDatabaseDeux db = TweetDatabaseDeux.getAppDatabase(this);
-
-        List<UserEntity> users = db.UserDao().getAllUsers();
-
-        for (UserEntity fruit : users){
-            System.out.println("email : "+fruit.getEmail()+"pwd : "+fruit.getPass());
-        }
-
 
         UserEntity user =  db.UserDao().getUserLogin(email,pwd);
         if(user!=null){
@@ -134,6 +132,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    // Method that initializes the DB with default data that we chose.
     private void initializeDB(){
         db = TweetDatabaseDeux.getAppDatabase(this);
         boolean duplicates = false;

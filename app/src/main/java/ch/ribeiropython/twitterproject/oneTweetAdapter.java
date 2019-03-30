@@ -16,6 +16,10 @@ import androidx.annotation.Nullable;
 
 public class oneTweetAdapter extends ArrayAdapter<oneTweet> {
 
+    /*
+        Adapter that handles the way the tweets are displayed.
+     */
+
     private Context mContext;
     private List<oneTweet> tweetList = new ArrayList<>();
 
@@ -27,6 +31,9 @@ public class oneTweetAdapter extends ArrayAdapter<oneTweet> {
 
     @NonNull
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        /*
+        Method that creates a tweet fragment for each tweet.
+         */
         View listItem = convertView;
         if(listItem == null)
             listItem = LayoutInflater.from(mContext).inflate(R.layout.tweet,parent,false);
@@ -55,7 +62,9 @@ public class oneTweetAdapter extends ArrayAdapter<oneTweet> {
                 TextView click = (TextView) listItem.findViewById(R.id.textView6);
                 click.setVisibility(View.VISIBLE);
 
-
+                /*
+                Setting the on click listener only for the tweets that correspond to the user.
+                 */
                 listItem.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View arg0) {
