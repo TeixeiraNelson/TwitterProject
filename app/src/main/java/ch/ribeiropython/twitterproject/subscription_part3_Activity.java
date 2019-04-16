@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 
 import androidx.appcompat.app.AppCompatActivity;
-import ch.ribeiropython.twitterproject.entity.TweetDatabaseDeux;
 import ch.ribeiropython.twitterproject.entity.UserEntity;
 
 public class subscription_part3_Activity extends AppCompatActivity {

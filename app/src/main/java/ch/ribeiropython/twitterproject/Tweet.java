@@ -8,7 +8,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import ch.ribeiropython.twitterproject.entity.TweetDatabaseDeux;
 import ch.ribeiropython.twitterproject.entity.TweetEntityDeux;
 
 public class Tweet extends AppCompatActivity {

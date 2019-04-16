@@ -1,25 +1,16 @@
 package ch.ribeiropython.twitterproject.entity;
 
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.ForeignKey;
-import androidx.room.Index;
-import androidx.room.PrimaryKey;
+import java.util.HashMap;
+import java.util.Map;
 
-@Entity(tableName = "tweets",foreignKeys = @ForeignKey(entity = UserEntity.class, parentColumns = "idUserEntity", childColumns = "idUser"),indices = {@Index("idUser")})
 public class TweetEntityDeux {
 
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo (name = "idTweetEntity")
     private int idTweetEntity;
 
-    @ColumnInfo (name = "message")
     private String message;
 
-    @ColumnInfo (name="idUser")
     private int idUser;
 
-    @ColumnInfo (name = "hashtags")
     private String hashtags;
 
     public TweetEntityDeux(String message, int idUser, String hashtags) {
@@ -34,6 +25,13 @@ public class TweetEntityDeux {
         this.hashtags = hashtags;
     }
 
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("message", message);
+        result.put("idUser", idUser);
+        result.put("hastags", hashtags);
+        return result;
+    }
 
     public String getMessage() {
         return message;

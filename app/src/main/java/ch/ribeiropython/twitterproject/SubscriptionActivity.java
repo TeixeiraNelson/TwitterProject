@@ -7,7 +7,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import ch.ribeiropython.twitterproject.entity.TweetDatabaseDeux;
 
 public class SubscriptionActivity extends AppCompatActivity {
 

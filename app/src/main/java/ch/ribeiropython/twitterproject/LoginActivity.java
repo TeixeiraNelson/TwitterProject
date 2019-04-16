@@ -3,7 +3,6 @@ package ch.ribeiropython.twitterproject;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,23 +10,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
-import ch.ribeiropython.twitterproject.entity.TweetDatabaseDeux;
-import ch.ribeiropython.twitterproject.entity.TweetEntityDeux;
-import ch.ribeiropython.twitterproject.entity.UserEntity;
 
 public class LoginActivity extends AppCompatActivity {
 
     private EditText email, password;
     private TextView sub;
-    private TweetDatabaseDeux db;
 
     private Button btnLogin;
 
@@ -104,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
 
     protected boolean checkUserLogin (String email, String pwd){
 
-        TweetDatabaseDeux db = TweetDatabaseDeux.getAppDatabase(this);
+        /*TweetDatabaseDeux db = TweetDatabaseDeux.getAppDatabase(this);
 
         List<UserEntity> users = db.UserDao().getAllUsers();
 
@@ -131,11 +122,13 @@ public class LoginActivity extends AppCompatActivity {
             return true;
         } else {
             return false;
-        }
+        }*/
+
+        return true;
     }
 
     private void initializeDB(){
-        db = TweetDatabaseDeux.getAppDatabase(this);
+       /* db = TweetDatabaseDeux.getAppDatabase(this);
         boolean duplicates = false;
 
         ArrayList<UserEntity> listUser = new ArrayList<>();
@@ -165,6 +158,6 @@ public class LoginActivity extends AppCompatActivity {
             } catch (SQLiteConstraintException e) {
                 duplicates = true;
             }
-        }
+        }*/
     }
 }
