@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import ch.ribeiropython.twitterproject.entity.TweetEntityDeux;
 
 public class TweetModifyActivity extends AppCompatActivity {
 
@@ -48,8 +47,8 @@ public class TweetModifyActivity extends AppCompatActivity {
 
         //Delete a tweet with the Id of it
         //User user = User.getUserSession(this.getApplicationContext());
-        TweetDatabaseDeux db = TweetDatabaseDeux.getAppDatabase(this);
-        db.tweetDao().deleteTweet(Integer.valueOf(idTweet));
+       /* TweetDatabaseDeux db = TweetDatabaseDeux.getAppDatabase(this);
+        db.tweetDao().deleteTweet(Integer.valueOf(idTweet));*/
 
         this.finish();
     }
@@ -63,7 +62,7 @@ public class TweetModifyActivity extends AppCompatActivity {
        // String newHashtags = hashtags.getText().toString();
 
         //Find the user id with is name
-        TweetDatabaseDeux db = TweetDatabaseDeux.getAppDatabase(this);
+       /* TweetDatabaseDeux db = TweetDatabaseDeux.getAppDatabase(this);
         int userId = db.UserDao().getUserId(user.nickname);
         TweetEntityDeux tweetToUpdate = new TweetEntityDeux(tweetSt,userId,hashtagsSt);
 
@@ -72,6 +71,6 @@ public class TweetModifyActivity extends AppCompatActivity {
         tweetToUpdate.setMessage(tweet.getText().toString());
         tweetToUpdate.setHashtags(hashtags.getText().toString());
         db.tweetDao().update(tweetToUpdate);
-        this.finish();
+        this.finish();*/
     }
 }

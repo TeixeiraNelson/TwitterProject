@@ -1,6 +1,5 @@
 package ch.ribeiropython.twitterproject;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class SearchHastagsActivity extends AppCompatActivity {
 
-    TweetDatabaseDeux db;
+   /* TweetDatabaseDeux db;*/
 
     /*
         Activity that handles the search by hashtag.
@@ -32,14 +31,14 @@ public class SearchHastagsActivity extends AppCompatActivity {
               String hashtags = hashTags.getText().toString();
               hashtags = hashtags.replaceAll("#","");
 
-              db = TweetDatabaseDeux.getAppDatabase(SearchHastagsActivity.this.getApplicationContext());
+              /*db = TweetDatabaseDeux.getAppDatabase(SearchHastagsActivity.this.getApplicationContext());
 
               Intent intent = new Intent(SearchHastagsActivity.this.getApplicationContext(), Menu.class);
 
               intent.putExtra("hastagsSearch", hashtags);
 
               startActivity(intent);
-              finish();
+              finish();*/
           }
       });
     }

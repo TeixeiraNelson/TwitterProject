@@ -61,7 +61,7 @@ public class Subscription_part2_Activity extends AppCompatActivity {
         /*
         Checks the nickname in the database if it exists or not
          */
-        TweetDatabaseDeux db = TweetDatabaseDeux.getAppDatabase(this);
+       /* TweetDatabaseDeux db = TweetDatabaseDeux.getAppDatabase(this);
 
         String usersNickname = db.UserDao().getByNickname(nickname);
 
@@ -69,7 +69,8 @@ public class Subscription_part2_Activity extends AppCompatActivity {
             return false;
         } else {
             return true;
-        }
+        }*/
+       return true;
     }
 
     public void launchSubPart3(View view) {
