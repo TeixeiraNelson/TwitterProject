@@ -2,6 +2,9 @@ package ch.ribeiropython.twitterproject;
 
 public class oneTweet {
 
+    /*
+        Class for the oneTweet Adapter representing a Tweet object
+     */
     private String pseudo;
     private String tweet;
     private String hashtag;

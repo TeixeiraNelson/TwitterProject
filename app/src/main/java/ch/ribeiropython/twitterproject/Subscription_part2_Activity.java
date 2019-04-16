@@ -30,6 +30,12 @@ public class Subscription_part2_Activity extends AppCompatActivity {
     }
 
     public void verifyNickname (View view){
+        /*
+        Method that verifies the nickname if it is already in use during the subscription
+        it is Case Sensitive
+
+        It checks in the database.
+         */
         EditText nicknameInput = findViewById(R.id.inscr_nickname_input);
         String nickname = nicknameInput.getText().toString();
         TextView status = findViewById(R.id.inscr_verif_state);
@@ -52,6 +58,9 @@ public class Subscription_part2_Activity extends AppCompatActivity {
     }
 
     private boolean verifyDatabaseNickname(String nickname){
+        /*
+        Checks the nickname in the database if it exists or not
+         */
         TweetDatabaseDeux db = TweetDatabaseDeux.getAppDatabase(this);
 
         String usersNickname = db.UserDao().getByNickname(nickname);
@@ -64,7 +73,9 @@ public class Subscription_part2_Activity extends AppCompatActivity {
     }
 
     public void launchSubPart3(View view) {
-
+        /*
+        Method to launch next activity of the subscription
+         */
         Intent inscrPart3 = new Intent(getApplicationContext(), subscription_part3_Activity.class);
         inscrPart3.putExtra("User", user);
         startActivity(inscrPart3);

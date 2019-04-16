@@ -57,6 +57,9 @@ public class subscription_part3_Activity extends AppCompatActivity {
     }
 
     public void startApp(View view){
+        /*
+        Method that starts the app (menu activity)
+         */
         Bundle extras = getIntent().getExtras();
         User user;
         if (extras != null) {
@@ -79,6 +82,9 @@ public class subscription_part3_Activity extends AppCompatActivity {
     }
 
     public void saveToDataBase(User user){
+        /*
+        Saving user in the database after the subscription process.
+         */
         TweetDatabaseDeux db = TweetDatabaseDeux.getAppDatabase(this);
 
         UserEntity userEntity = new UserEntity(user.email,user.password,user.nickname);
@@ -88,6 +94,12 @@ public class subscription_part3_Activity extends AppCompatActivity {
 
     public void saveUserToSession(User user){
 
+        /*
+        Storing the user in the shared preferences.
+
+        As there is no way to store an object, we used Gson library to transform our object in a gson structured string that
+        will then be change into a user object again when we need to check stuff...
+         */
         Gson gson = new Gson();
         String userInfoString = gson.toJson(user);
 
