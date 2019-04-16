@@ -27,7 +27,7 @@ public class Menu extends AppCompatActivity
 
     private ListView listViewTweet;
     private oneTweetAdapter mAdapter;
-    TweetDatabaseDeux db;
+    /* TweetDatabaseDeux db; */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,14 +97,17 @@ public class Menu extends AppCompatActivity
         ArrayList<oneTweet> tweetsList = new ArrayList<>();
         listViewTweet = (ListView) findViewById(R.id.listViewTweet);
 
-        //Charge les infos présente dans la base de données tweets
-        db = TweetDatabaseDeux.getAppDatabase(this);
-        List<oneTweet> Tweets;
 
-        if (TweetByHastags==0)
-            Tweets = db.tweetDao().getAllTweetsWithUsername();
+        //Charge les infos présente dans la base de données tweets
+        /* db = TweetDatabaseDeux.getAppDatabase(this); */
+        List<oneTweet> Tweets = new ArrayList<>();
+
+        if (TweetByHastags==0){
+
+        }
+          /*  Tweets = db.tweetDao().getAllTweetsWithUsername(); */
         else
-            Tweets = db.tweetDao().getAllTweetsByHastags(hastagsSearch);
+           /* Tweets = db.tweetDao().getAllTweetsByHastags(hastagsSearch); */
 
         //Ajoute a la liste les tweets récupéré
         for (oneTweet tweet : Tweets){
