@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 
 import androidx.appcompat.app.AppCompatActivity;
-import ch.ribeiropython.twitterproject.entity.UserEntity;
 
 public class subscription_part3_Activity extends AppCompatActivity {
 
@@ -85,11 +84,11 @@ public class subscription_part3_Activity extends AppCompatActivity {
         /*
         Saving user in the database after the subscription process.
          */
-        TweetDatabaseDeux db = TweetDatabaseDeux.getAppDatabase(this);
+        /*TweetDatabaseDeux db = TweetDatabaseDeux.getAppDatabase(this);
 
         UserEntity userEntity = new UserEntity(user.email,user.password,user.nickname);
 
-        db.UserDao().insert(userEntity);
+        db.UserDao().insert(userEntity);*/
     }
 
     public void saveUserToSession(User user){

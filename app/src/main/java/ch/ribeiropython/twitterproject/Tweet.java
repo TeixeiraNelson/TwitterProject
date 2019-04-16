@@ -1,6 +1,5 @@
 package ch.ribeiropython.twitterproject;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -8,11 +7,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import ch.ribeiropython.twitterproject.entity.TweetEntityDeux;
 
 public class Tweet extends AppCompatActivity {
 
-    TweetDatabaseDeux db;
+   /* TweetDatabaseDeux db;*/
     private TextView username;
 
     @Override
@@ -43,12 +41,12 @@ public class Tweet extends AppCompatActivity {
               String nickname = user.nickname;
 
               //Add the new tweet on the database
-              db = TweetDatabaseDeux.getAppDatabase(Tweet.this.getApplicationContext());
+             /* db = TweetDatabaseDeux.getAppDatabase(Tweet.this.getApplicationContext());
               int idUser = db.UserDao().getUserId(nickname);
               db.tweetDao().insertAll(new TweetEntityDeux(msg,idUser,hashtags));
               Intent intent = new Intent(Tweet.this.getApplicationContext(), Menu.class);
               startActivity(intent);
-              finish();
+              finish();*/
           }
       });
     }

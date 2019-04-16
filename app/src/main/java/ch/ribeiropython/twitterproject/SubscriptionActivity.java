@@ -52,14 +52,15 @@ public class SubscriptionActivity extends AppCompatActivity {
 
         //check if the user is all ready use
 
-        TweetDatabaseDeux db = TweetDatabaseDeux.getAppDatabase(this);
+        /*TweetDatabaseDeux db = TweetDatabaseDeux.getAppDatabase(this);
         String usersEmail = db.UserDao().getByEmail(userEmail);
 
         if(usersEmail!=null){
             return false;
         } else {
             return true;
-        }
+        }*/
+        return true;
 
     }
 

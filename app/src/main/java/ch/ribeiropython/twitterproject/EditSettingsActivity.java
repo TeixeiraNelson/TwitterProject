@@ -24,7 +24,7 @@ public class EditSettingsActivity extends AppCompatActivity {
          */
         EditText email = findViewById(R.id.txtEmail);
 
-        TweetDatabaseDeux db = TweetDatabaseDeux.getAppDatabase(this);
+       /* TweetDatabaseDeux db = TweetDatabaseDeux.getAppDatabase(this);
         User user = User.getUserSession(this.getApplicationContext());
 
         int userId = db.UserDao().getUserId(user.nickname);
@@ -42,7 +42,7 @@ public class EditSettingsActivity extends AppCompatActivity {
         else
         {
             Toast.makeText(EditSettingsActivity.this, "Email all ready use.", Toast.LENGTH_SHORT).show();
-        }
+        }*/
 
 
     }
@@ -61,12 +61,12 @@ public class EditSettingsActivity extends AppCompatActivity {
         User user = User.getUserSession(this.getApplicationContext());
         if(actualPassword.getText().toString().equals(user.password)){
             if(Password1.getText().toString().equals(Password2.getText().toString())){
-                TweetDatabaseDeux db = TweetDatabaseDeux.getAppDatabase(this);
+               /* TweetDatabaseDeux db = TweetDatabaseDeux.getAppDatabase(this);
                 int userId = db.UserDao().getUserId(user.nickname);
                 db.UserDao().updatePassword(userId, Password1.getText().toString());
                 Toast.makeText(EditSettingsActivity.this, "Password updated.", Toast.LENGTH_SHORT).show();
                 EditSettingsActivity.this.finish();
-
+*/
 
 
             } else {
