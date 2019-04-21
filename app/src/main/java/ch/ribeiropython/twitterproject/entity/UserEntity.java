@@ -36,35 +36,28 @@ public class UserEntity {
     public String getEmail() {
         return email;
     }
-
     public String getPass() {
         return pass;
     }
-
     public String getNickname() {
         return nickname;
+    }
+    public String getIdUserEntity() {
+        return idUserEntity;
     }
 
     public void setOwner(String owner) {
         this.owner = owner;
     }
-
     public void setEmail(String email) {
         this.email = email;
     }
-
     public void setPass(String pass) {
         this.pass = pass;
     }
-
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
-
-    public String getIdUserEntity() {
-        return idUserEntity;
-    }
-
     public void setIdUserEntity(String idUserEntity) {
         this.idUserEntity = idUserEntity;
     }

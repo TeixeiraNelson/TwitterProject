@@ -1,18 +1,34 @@
 package ch.ribeiropython.twitterproject;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+public class EditSettingsActivity extends BaseActivity {
 
-public class EditSettingsActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_settings);
+        updateUIWhenCreating();
+    }
+
+    private void updateUIWhenCreating(){
+
+        if (this.getCurrentUser() != null){
+            TextView usernameTextView = findViewById(R.id.txtUsername);
+
+            //Get email & username from Firebase
+            String email = TextUtils.isEmpty(this.getCurrentUser().getEmail()) ? getString(R.string.info_email) : this.getCurrentUser().getEmail();
+
+            //Update views with data
+            usernameTextView.setText(email);
+        }
     }
 
     public void ChangeEmail (View o){
@@ -22,8 +38,8 @@ public class EditSettingsActivity extends AppCompatActivity {
 
             it checkes also the email syntax.
          */
-        EditText email = findViewById(R.id.txtEmail);
 
+        EditText email = findViewById(R.id.txtEmail);
        /* TweetDatabaseDeux db = TweetDatabaseDeux.getAppDatabase(this);
         User user = User.getUserSession(this.getApplicationContext());
 
