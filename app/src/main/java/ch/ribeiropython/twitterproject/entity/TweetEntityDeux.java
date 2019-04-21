@@ -1,19 +1,19 @@
 package ch.ribeiropython.twitterproject.entity;
 
+import com.google.firebase.database.Exclude;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class TweetEntityDeux {
 
-    private int idTweetEntity;
-
+    private String idTweetEntity;
     private String message;
-
-    private int idUser;
-
+    private String idUser;
     private String hashtags;
+    private String owner;
 
-    public TweetEntityDeux(String message, int idUser, String hashtags) {
+    public TweetEntityDeux(String message, String idUser, String hashtags) {
 
         //Check if the tweet is shorter than 120 caractere
         if(message.length()<=120)
@@ -24,6 +24,7 @@ public class TweetEntityDeux {
         this.idUser = idUser;
         this.hashtags = hashtags;
     }
+
 
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
@@ -37,7 +38,7 @@ public class TweetEntityDeux {
         return message;
     }
 
-    public int getIdUser() {
+    public String getIdUser() {
         return idUser;
     }
 
@@ -53,7 +54,7 @@ public class TweetEntityDeux {
             this.message = message.substring(0,119);
     }
 
-    public void setIdUser(int idUser) {
+    public void setIdUser(String idUser) {
         this.idUser= idUser;
     }
 
@@ -61,11 +62,19 @@ public class TweetEntityDeux {
         this.hashtags= hashtags;
     }
 
-    public int getIdTweetEntity() {
+    public String getIdTweetEntity() {
         return idTweetEntity;
     }
 
-    public void setIdTweetEntity(int idTweetEntity) {
+    public void setIdTweetEntity(String idTweetEntity) {
         this.idTweetEntity = idTweetEntity;
     }
+
+    @Exclude
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) { this.owner = owner;   }
+
 }

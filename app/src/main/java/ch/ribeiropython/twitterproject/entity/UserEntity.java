@@ -1,21 +1,18 @@
 package ch.ribeiropython.twitterproject.entity;
 
+import com.google.firebase.database.Exclude;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class UserEntity {
 
 
-    private int idUserEntity;
-
-
+    private String idUserEntity;
     private String email;
-
-
     private String pass;
-
-
     private String nickname;
+    private String owner;
 
     public UserEntity(String email, String pass, String nickname) {
         this.email = email;
@@ -32,6 +29,10 @@ public class UserEntity {
     }
 
 
+    @Exclude
+    public String getOwner() {
+        return owner;
+    }
     public String getEmail() {
         return email;
     }
@@ -42,6 +43,10 @@ public class UserEntity {
 
     public String getNickname() {
         return nickname;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 
     public void setEmail(String email) {
@@ -56,11 +61,11 @@ public class UserEntity {
         this.nickname = nickname;
     }
 
-    public int getIdUserEntity() {
+    public String getIdUserEntity() {
         return idUserEntity;
     }
 
-    public void setIdUserEntity(int idUserEntity) {
+    public void setIdUserEntity(String idUserEntity) {
         this.idUserEntity = idUserEntity;
     }
 }
