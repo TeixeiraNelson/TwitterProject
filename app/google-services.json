@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "328264475000-1cp50o4fqt3t43slvi288c4j5slmtnja.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ch.ribeiropython.twitterproject",
+            "certificate_hash": "6275beeb134faf66e67cdfe204798838268d1845"
+          }
+        },
+        {
           "client_id": "328264475000-e4nmfkd008dalpqr7or1ca7c5v3ftjdc.apps.googleusercontent.com",
           "client_type": 3
         }
