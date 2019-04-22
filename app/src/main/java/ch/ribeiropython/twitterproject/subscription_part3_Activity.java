@@ -14,9 +14,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import ch.ribeiropython.twitterproject.firebase.UserFb;
 
 public class subscription_part3_Activity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -101,13 +104,19 @@ public class subscription_part3_Activity extends AppCompatActivity {
 
     }
 
-    private void signUserIn(User user) {
-
+    private void signUserIn(final User user) {
         mAuth.signInWithEmailAndPassword(user.email, user.password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+
+                            UserFb userFb = new UserFb(user.email, user.nickname);
+
+                            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+                            databaseReference.child("User").setValue(userFb);
+
+
                             runMainActivity();
                         } else {
                             // If sign in fails, display a message to the user.
@@ -116,6 +125,7 @@ public class subscription_part3_Activity extends AppCompatActivity {
                         }
                     }
                 });
+
     }
 
     private void runMainActivity() {

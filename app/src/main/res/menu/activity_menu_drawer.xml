@@ -16,6 +16,11 @@
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_menu_manage"
             android:title="Settings" />
+
+        <item
+            android:id="@+id/nav_logoff"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Log off"/>
     </group>
 
 

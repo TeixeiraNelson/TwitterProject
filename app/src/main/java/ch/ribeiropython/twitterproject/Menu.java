@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -167,6 +168,11 @@ public class Menu extends AppCompatActivity
             Intent intent = new Intent(getApplicationContext(), EditSettingsActivity.class);
             startActivity(intent);
 
+        } else if (id == R.id.nav_logoff){
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            FirebaseAuth.getInstance().signOut();
+            startActivity(intent);
+            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

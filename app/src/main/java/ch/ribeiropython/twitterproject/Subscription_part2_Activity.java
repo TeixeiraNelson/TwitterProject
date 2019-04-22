@@ -68,7 +68,9 @@ public class Subscription_part2_Activity extends AppCompatActivity {
     }
 
     private void verifyDatabaseNickname(String nickname){
-        /*
+
+
+         /*
             This method will check in the firebase data base if the username is already in use
             in the User collection.
          */
@@ -90,6 +92,8 @@ public class Subscription_part2_Activity extends AppCompatActivity {
     }
 
     public void launchSubPart3(View view) {
+
+
         /*
         Method to launch next activity of the subscription
          */
