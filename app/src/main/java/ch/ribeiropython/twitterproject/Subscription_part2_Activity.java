@@ -9,11 +9,19 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class Subscription_part2_Activity extends AppCompatActivity {
 
     private User user = new User();
+    private static boolean NicknameIsFree = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +48,9 @@ public class Subscription_part2_Activity extends AppCompatActivity {
         String nickname = nicknameInput.getText().toString();
         TextView status = findViewById(R.id.inscr_verif_state);
 
-        if (verifyDatabaseNickname(nickname)) {
+
+        verifyDatabaseNickname(nickname);
+        if (NicknameIsFree) {
             status.setText("'"+ nickname + "'" + " is free to use !");
             status.setTextColor(Color.GREEN);
 
@@ -57,20 +67,26 @@ public class Subscription_part2_Activity extends AppCompatActivity {
         }
     }
 
-    private boolean verifyDatabaseNickname(String nickname){
+    private void verifyDatabaseNickname(String nickname){
         /*
-        Checks the nickname in the database if it exists or not
+            This method will check in the firebase data base if the username is already in use
+            in the User collection.
          */
-       /* TweetDatabaseDeux db = TweetDatabaseDeux.getAppDatabase(this);
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+        Query query = rootRef.child("User").orderByChild("Nickname").equalTo(nickname);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(!dataSnapshot.exists()) {
+                    NicknameIsFree = false;
+                }
+            }
 
-        String usersNickname = db.UserDao().getByNickname(nickname);
-
-        if(usersNickname!=null){
-            return false;
-        } else {
-            return true;
-        }*/
-       return true;
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                NicknameIsFree = true;
+            }
+        });
     }
 
     public void launchSubPart3(View view) {

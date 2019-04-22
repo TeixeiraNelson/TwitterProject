@@ -1,5 +1,6 @@
 package ch.ribeiropython.twitterproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
@@ -7,10 +8,18 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class subscription_part3_Activity extends AppCompatActivity {
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +38,6 @@ public class subscription_part3_Activity extends AppCompatActivity {
         /*
             Check box events
          */
-
-
-
         CheckBox agreeChkBx = ( CheckBox ) findViewById( R.id.checkBox_terms );
         agreeChkBx.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
         {
@@ -46,9 +52,6 @@ public class subscription_part3_Activity extends AppCompatActivity {
 
             }
         });
-
-
-
     }
 
     public void startApp(View view){
@@ -63,20 +66,63 @@ public class subscription_part3_Activity extends AppCompatActivity {
         }
 
 
+    }
 
+    public void registerUser(final User user){
+        /*
+            Registering the new user in the firebase database
+         */
+
+
+        // Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
+
+        mAuth.createUserWithEmailAndPassword(user.email, user.password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success
+                            FirebaseAuth.getInstance().signOut();
+                            signUserIn(user);
+
+
+
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Toast.makeText(subscription_part3_Activity.this, "Subscription failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
 
 
 
 
     }
 
-    public void registerUser(User user){
-        /*
-            Registering the new user in the firebase database
-         */
+    private void signUserIn(User user) {
 
+        mAuth.signInWithEmailAndPassword(user.email, user.password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            runMainActivity();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Toast.makeText(subscription_part3_Activity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
 
+    private void runMainActivity() {
 
+        Intent intentMyAccount = new Intent(getApplicationContext(), Menu.class);
+        startActivity(intentMyAccount);
+        finish();
 
     }
 

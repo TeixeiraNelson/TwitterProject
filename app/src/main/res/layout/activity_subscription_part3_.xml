@@ -20,6 +20,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
+
     <TextView
         android:id="@+id/inscr_progressLogin3"
         android:layout_width="wrap_content"
@@ -30,6 +32,8 @@
         app:layout_constraintEnd_toStartOf="@+id/inscr_progressNickname3"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
+
+
 
     <TextView
         android:id="@+id/inscr_progressNickname3"
@@ -42,6 +46,8 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/inscr_progressLogin3" />
 
+
+
     <TextView
         android:id="@+id/inscr_progressTerms3"
         android:layout_width="wrap_content"
@@ -52,6 +58,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/inscr_progressNickname3" />
+
+
 
     <Button
         android:id="@+id/inscr_btn_next3"
@@ -66,6 +74,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/checkBox_terms" />
 
+
+
     <CheckBox
         android:id="@+id/checkBox_terms"
         android:layout_width="153dp"
@@ -76,6 +86,8 @@
         app:layout_constraintHorizontal_bias="0.112"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inscr_terms_txt" />
+
+
 
     <TextView
         android:id="@+id/inscr_terms_txt"
@@ -88,6 +100,8 @@
         app:layout_constraintHorizontal_bias="0.475"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progressBar3" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

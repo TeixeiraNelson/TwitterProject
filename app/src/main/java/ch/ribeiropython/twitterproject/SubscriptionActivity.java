@@ -6,9 +6,18 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SubscriptionActivity extends AppCompatActivity {
+
+    private static boolean EmailIsFree = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +35,10 @@ public class SubscriptionActivity extends AppCompatActivity {
         String userPassword = passwordInput.getText().toString();
         String userPassword2 = passwordInput2.getText().toString();
 
-        //Check if the email is good or not
-        if(verifyEmailSyntax(userEmail) && verifyEmailInUse(userEmail)){
+        //Check if the email is free to use
+        //In the firebase Database.
+        verifyEmailInUse(userEmail);
+        if(verifyEmailSyntax(userEmail) && EmailIsFree){
             if(verifyPasswords(userPassword, userPassword2)){
                 //If okay go to the next activity
                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.valid_info), Toast.LENGTH_SHORT ).show();
@@ -40,7 +51,7 @@ public class SubscriptionActivity extends AppCompatActivity {
                 finish();
             }
         } else {
-            //If no you have to change the email
+            //If not you have to change the email
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.invalid_email_syntax), Toast.LENGTH_SHORT ).show();
         }
 
@@ -48,23 +59,34 @@ public class SubscriptionActivity extends AppCompatActivity {
 
     }
 
-    private boolean verifyEmailInUse(String userEmail) {
+    private void verifyEmailInUse(String userEmail) {
 
-        //check if the user is all ready use
+        /*
+        Checks the firebase database if the email is already in use or not
+         */
 
-        /*TweetDatabaseDeux db = TweetDatabaseDeux.getAppDatabase(this);
-        String usersEmail = db.UserDao().getByEmail(userEmail);
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+        Query query = rootRef.child("User").orderByChild("Email").equalTo(userEmail);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(!dataSnapshot.exists()) {
+                    EmailIsFree = false;
+                }
+            }
 
-        if(usersEmail!=null){
-            return false;
-        } else {
-            return true;
-        }*/
-        return true;
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                EmailIsFree = true;
+            }
+        });
 
     }
 
     private boolean verifyEmailSyntax (String input){
+        /*
+            Uses the android util patterns to check the syntax of the email.
+         */
         if (input == null) {
             return false;
         } else {
@@ -74,7 +96,7 @@ public class SubscriptionActivity extends AppCompatActivity {
 
     private boolean verifyPasswords ( String password, String password2){
 
-        //Check if the password has more or egal than 6 caractères
+        //Check if the password has at least 6 characters.
         if(password.equals(password2)){
             if(password.length()>=6){
                 return true;

@@ -52,23 +52,18 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 String loginEmail = email.getText().toString();
                 String loginPwd = password.getText().toString();
 
                 checkUserLogin(loginEmail,loginPwd);
-
             }
         });
 
         sub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intentMyAccount = new Intent(getApplicationContext(), SubscriptionActivity.class);
                 startActivity(intentMyAccount);
-
-
             }
         });
 
@@ -85,14 +80,13 @@ public class LoginActivity extends AppCompatActivity {
 
     protected void checkUserLogin (String email, String pwd){
 
-
         mAuth.signInWithEmailAndPassword(email, pwd)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Toast.makeText(getApplicationContext(), "Vous êtes loggé correctement", Toast.LENGTH_LONG).show();
+                            // Sign in success
+                            Toast.makeText(getApplicationContext(), "You logged in properly", Toast.LENGTH_LONG).show();
 
                             Intent intentMyAccount = new Intent(getApplicationContext(), Menu.class);
                             startActivity(intentMyAccount);
