@@ -1,5 +1,6 @@
 package ch.ribeiropython.twitterproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -20,7 +21,6 @@ import ch.ribeiropython.twitterproject.entity.TweetEntityDeux;
 
 public class Tweet extends BaseActivity {
 
-   /* TweetDatabaseDeux db;*/
     private TextView username;
     FirebaseFirestore db;
 
@@ -34,10 +34,6 @@ public class Tweet extends BaseActivity {
         username = findViewById(R.id.txtUsernameNew);
         String email = TextUtils.isEmpty(this.getCurrentUser().getEmail()) ? getString(R.string.info_email) : this.getCurrentUser().getEmail();
         username.setText(email);
-        /*
-        username = findViewById(R.id.txtUsernameNew);
-        User user = User.getUserSession(Tweet.this.getApplicationContext());
-        username.setText(user.nickname);*/
 
         //Create a new tweet
       Button sendButton = findViewById(R.id.btnSendTweet);
@@ -90,6 +86,10 @@ public class Tweet extends BaseActivity {
 
                           }
                       });
+
+              Intent intent = new Intent(Tweet.this.getApplicationContext(), Menu.class);
+              startActivity(intent);
+              finish();
           }
       });
     }

@@ -22,7 +22,6 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -171,37 +170,6 @@ public class Menu extends AppCompatActivity
 
         LoadTweets();
 
-    }
-
-
-    /*
-    Method to get a tweet list by hashtag
-     */
-    public ArrayList<oneTweet> getListTweet(int TweetByHastags,String hastagsSearch)
-    {
-        ArrayList<oneTweet> tweetsList = new ArrayList<>();
-        listViewTweet = (ListView) findViewById(R.id.listViewTweet);
-
-
-        //Charge les infos présente dans la base de données tweets
-        /* db = TweetDatabaseDeux.getAppDatabase(this); */
-        List<oneTweet> Tweets = new ArrayList<>();
-
-        if (TweetByHastags==0){
-
-        }
-          /*  Tweets = db.tweetDao().getAllTweetsWithUsername(); */
-        else
-           /* Tweets = db.tweetDao().getAllTweetsByHastags(hastagsSearch); */
-
-        //Ajoute a la liste les tweets récupéré
-        for (oneTweet tweet : Tweets){
-            // Toast.makeText(Menu.this, tweet.getIdUser(), Toast.LENGTH_SHORT).show();
-            System.out.println("Affiche ===> Pseudo : "+tweet.getPseudo()+" message : "+tweet.getTweet()+" hastags : "+tweet.getHashtag()+" id tweet : "+tweet.getIdTweet());
-            //tweetsList.add(new oneTweet(tweet.getPseudo(),tweet.getTweet() , tweet.getHashtag(), tweet.getIdTweet()));
-        }
-
-        return tweetsList;
     }
 
     @Override
