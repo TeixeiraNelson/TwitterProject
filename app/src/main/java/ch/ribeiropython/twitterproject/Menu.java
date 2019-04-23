@@ -18,6 +18,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class Menu extends AppCompatActivity
 
         // Loading tweets
         db = FirebaseFirestore.getInstance();
-        LoadTweets();
+       // LoadTweets();
         /*db = FirebaseFirestore.getInstance();
 
         Map<String, Object> newTweet = new HashMap<>();
@@ -99,7 +100,7 @@ public class Menu extends AppCompatActivity
     private void LoadTweets() {
 
         // getting extras to know if it has to print all tweets or just those that have a particular hashtag.
-        /*Bundle extras = getIntent().getExtras();
+        Bundle extras = getIntent().getExtras();
         String hastagsSearch="";
         int TweetByHastags=0;
 
@@ -109,33 +110,57 @@ public class Menu extends AppCompatActivity
             Toast.makeText(Menu.this,"Search with Hastags: "+ hastagsSearch, Toast.LENGTH_SHORT).show();
         }
 
-        //adds tweet list to the adapter
-        mAdapter = new oneTweetAdapter(this,getListTweet(TweetByHastags,hastagsSearch));
-        listViewTweet.setAdapter(mAdapter);*/
-
         tweetsList = new ArrayList<>();
         listViewTweet = (ListView) findViewById(R.id.listViewTweet);
 
-        db.collection("Tweet").orderBy("Date")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        for (DocumentSnapshot doc : task.getResult())
-                        {
-                            tweetsList.add(new oneTweet(doc.getString("Email"),doc.getString("Message") , doc.getString("Hastags")));
-                            System.out.println("===== Email"+doc.getString("Email")+"  "+doc.getString("Message")+"  "+doc.getString("Hastags"));
+        if (TweetByHastags==1)
+        {
+            db.collection("Tweet").whereEqualTo("Hastags",hastagsSearch)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            for (DocumentSnapshot doc : task.getResult())
+                            {
+                                tweetsList.add(new oneTweet(doc.getString("Email"),doc.getString("Message") , doc.getString("Hastags")));
+                                System.out.println("===== Email"+doc.getString("Email")+"  "+doc.getString("Message")+"  "+doc.getString("Hastags"));
+                            }
+                            mAdapter = new oneTweetAdapter(Menu.this,tweetsList);
+                            listViewTweet.setAdapter(mAdapter);
                         }
-                        mAdapter = new oneTweetAdapter(Menu.this,tweetsList);
-                        listViewTweet.setAdapter(mAdapter);
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(Menu.this,"fail refresh list of tweet", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(Menu.this,"fail refresh list of tweet", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+        else
+        {
+            db.collection("Tweet").orderBy("Date", Query.Direction.DESCENDING)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            for (DocumentSnapshot doc : task.getResult())
+                            {
+                                tweetsList.add(new oneTweet(doc.getString("Email"),doc.getString("Message") , doc.getString("Hastags")));
+                                System.out.println("===== Email"+doc.getString("Email")+"  "+doc.getString("Message")+"  "+doc.getString("Hastags"));
+                            }
+                            mAdapter = new oneTweetAdapter(Menu.this,tweetsList);
+                            listViewTweet.setAdapter(mAdapter);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(Menu.this,"fail refresh list of tweet", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+
+
 
     }
 
@@ -144,7 +169,7 @@ public class Menu extends AppCompatActivity
     protected void onResume() {
         super.onResume();
 
-       // LoadTweets();
+        LoadTweets();
 
     }
 
