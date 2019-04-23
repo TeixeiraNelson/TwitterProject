@@ -1,7 +1,6 @@
 package ch.ribeiropython.twitterproject;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,14 +45,14 @@ public class oneTweetAdapter extends ArrayAdapter<oneTweet> {
         TextView hashtag = (TextView) listItem.findViewById(R.id.textView_hashtag);
         hashtag.setText(currentTweet.getHashtag());
 
-        User user = User.getUserSession(oneTweetAdapter.this.getContext());
+        //User user = User.getUserSession(oneTweetAdapter.this.getContext());
 
         TextView pseudo = (TextView) listItem.findViewById(R.id.textView_pseudo);
-        pseudo.setTextColor(mContext.getColor(R.color.redColor));
+       // pseudo.setTextColor(mContext.getColor(R.color.redColor));
         pseudo.setText(currentTweet.getPseudo());
 
 
-        System.out.println("nick : " + user.nickname + " pseudo : " + currentTweet.getPseudo());
+      /*  System.out.println("nick : " + user.nickname + " pseudo : " + currentTweet.getPseudo());
 
         if(user.nickname!=null)
             if(user.nickname.equals(currentTweet.getPseudo())) {
@@ -65,7 +64,7 @@ public class oneTweetAdapter extends ArrayAdapter<oneTweet> {
                 /*
                 Setting the on click listener only for the tweets that correspond to the user.
                  */
-                listItem.setOnClickListener(new View.OnClickListener() {
+               /* listItem.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View arg0) {
                         User user = User.getUserSession(oneTweetAdapter.this.getContext());
@@ -78,7 +77,7 @@ public class oneTweetAdapter extends ArrayAdapter<oneTweet> {
                         mContext.startActivity(intent);
                     }
                 });
-            }
+            }*/
 
         return listItem;
     }

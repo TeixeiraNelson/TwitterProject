@@ -12,8 +12,9 @@ public class TweetEntityDeux {
     private String idUser;
     private String hashtags;
     private String owner;
+    private long date ;
 
-    public TweetEntityDeux(String message, String idUser, String hashtags) {
+    public TweetEntityDeux(String message, String idUser, String hashtags,long date) {
 
         //Check if the tweet is shorter than 120 caractere
         if(message.length()<=120)
@@ -23,6 +24,7 @@ public class TweetEntityDeux {
 
         this.idUser = idUser;
         this.hashtags = hashtags;
+        this.date = date;
     }
 
 

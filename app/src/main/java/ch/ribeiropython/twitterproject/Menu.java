@@ -10,13 +10,20 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -29,6 +36,8 @@ public class Menu extends AppCompatActivity
     private ListView listViewTweet;
     private oneTweetAdapter mAdapter;
     /* TweetDatabaseDeux db; */
+    FirebaseFirestore db;
+    ArrayList<oneTweet> tweetsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +46,32 @@ public class Menu extends AppCompatActivity
         setContentView(R.layout.activity_menu);
 
         // Loading tweets
-        LoadTweets();
+        db = FirebaseFirestore.getInstance();
+       // LoadTweets();
+        /*db = FirebaseFirestore.getInstance();
+
+        Map<String, Object> newTweet = new HashMap<>();
+        newTweet.put("Message","Ecrire depuis android");
+        newTweet.put("Hastags","#testdepuisandroid");
+        newTweet.put("idUser_tweet","zgeg");
+        newTweet.put("timestamp", ServerValue.TIMESTAMP);
+
+        db.collection("Tweet").document()
+                .set(newTweet)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(Menu.this,"new tweet add", Toast.LENGTH_SHORT).show();
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(Menu.this,"fail new tweet add", Toast.LENGTH_SHORT).show();
+
+                    }
+                });*/
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -75,9 +109,58 @@ public class Menu extends AppCompatActivity
             Toast.makeText(Menu.this,"Search with Hastags: "+ hastagsSearch, Toast.LENGTH_SHORT).show();
         }
 
-        //adds tweet list to the adapter
-        mAdapter = new oneTweetAdapter(this,getListTweet(TweetByHastags,hastagsSearch));
-        listViewTweet.setAdapter(mAdapter);
+        tweetsList = new ArrayList<>();
+        listViewTweet = (ListView) findViewById(R.id.listViewTweet);
+
+        if (TweetByHastags==1)
+        {
+            db.collection("Tweet").whereEqualTo("Hastags",hastagsSearch)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            for (DocumentSnapshot doc : task.getResult())
+                            {
+                                tweetsList.add(new oneTweet(doc.getString("Email"),doc.getString("Message") , doc.getString("Hastags")));
+                                System.out.println("===== Email"+doc.getString("Email")+"  "+doc.getString("Message")+"  "+doc.getString("Hastags"));
+                            }
+                            mAdapter = new oneTweetAdapter(Menu.this,tweetsList);
+                            listViewTweet.setAdapter(mAdapter);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(Menu.this,"fail refresh list of tweet", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+        else
+        {
+            db.collection("Tweet").orderBy("Date", Query.Direction.DESCENDING)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            for (DocumentSnapshot doc : task.getResult())
+                            {
+                                tweetsList.add(new oneTweet(doc.getString("Email"),doc.getString("Message") , doc.getString("Hastags")));
+                                System.out.println("===== Email"+doc.getString("Email")+"  "+doc.getString("Message")+"  "+doc.getString("Hastags"));
+                            }
+                            mAdapter = new oneTweetAdapter(Menu.this,tweetsList);
+                            listViewTweet.setAdapter(mAdapter);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(Menu.this,"fail refresh list of tweet", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+
+
+
     }
 
     // method to refresh the activity
@@ -87,37 +170,6 @@ public class Menu extends AppCompatActivity
 
         LoadTweets();
 
-    }
-
-
-    /*
-    Method to get a tweet list by hashtag
-     */
-    public ArrayList<oneTweet> getListTweet(int TweetByHastags,String hastagsSearch)
-    {
-        ArrayList<oneTweet> tweetsList = new ArrayList<>();
-        listViewTweet = (ListView) findViewById(R.id.listViewTweet);
-
-
-        //Charge les infos présente dans la base de données tweets
-        /* db = TweetDatabaseDeux.getAppDatabase(this); */
-        List<oneTweet> Tweets = new ArrayList<>();
-
-        if (TweetByHastags==0){
-
-        }
-          /*  Tweets = db.tweetDao().getAllTweetsWithUsername(); */
-        else
-           /* Tweets = db.tweetDao().getAllTweetsByHastags(hastagsSearch); */
-
-        //Ajoute a la liste les tweets récupéré
-        for (oneTweet tweet : Tweets){
-            // Toast.makeText(Menu.this, tweet.getIdUser(), Toast.LENGTH_SHORT).show();
-            System.out.println("Affiche ===> Pseudo : "+tweet.getPseudo()+" message : "+tweet.getTweet()+" hastags : "+tweet.getHashtag()+" id tweet : "+tweet.getIdTweet());
-            tweetsList.add(new oneTweet(tweet.getPseudo(),tweet.getTweet() , tweet.getHashtag(), tweet.getIdTweet()));
-        }
-
-        return tweetsList;
     }
 
     @Override
