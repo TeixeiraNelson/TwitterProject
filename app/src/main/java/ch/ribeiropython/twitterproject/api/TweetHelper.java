@@ -12,12 +12,9 @@ public class TweetHelper {
     public static CollectionReference getAllTweet(){
         return FirebaseFirestore.getInstance().collection(COLLECTION_NAME);
     }
-    public static Query getAllMessageForChat(String chat){
+    public static Query getAllTweetbyDate(){
         return getAllTweet()
-                .document(chat)
-                .collection(COLLECTION_NAME)
-                .orderBy("dateCreated")
-                .limit(50);
+                .orderBy("Date");
     }
 
 }

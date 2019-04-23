@@ -8,7 +8,7 @@ public class oneTweet {
     private String pseudo;
     private String tweet;
     private String hashtag;
-    private int idTweet;
+    private String idTweet;
 
     public String getPseudo() {
         return pseudo;
@@ -34,13 +34,13 @@ public class oneTweet {
         return hashtag;
     }
 
-    public int getIdTweet() { return idTweet; }
+    public String getIdTweet() { return idTweet; }
 
     public void setHashtag(String hashtag) {
         this.hashtag = hashtag;
     }
 
-    public oneTweet(String pseudo, String tweet, String hashtag, int idTweet) {
+    public oneTweet(String pseudo, String tweet, String hashtag) {
         this.pseudo = pseudo;
 
         if(tweet.length()<=120)
@@ -49,6 +49,5 @@ public class oneTweet {
             this.tweet = tweet.substring(0,119);
 
         this.hashtag = hashtag;
-        this.idTweet = idTweet;
     }
 }
