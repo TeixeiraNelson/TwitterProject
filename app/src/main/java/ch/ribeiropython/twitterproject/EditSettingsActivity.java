@@ -2,6 +2,7 @@ package ch.ribeiropython.twitterproject;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -11,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -34,6 +34,8 @@ public class EditSettingsActivity extends BaseActivity {
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference storageRef;
     private String actualUsername = "";
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +60,11 @@ public class EditSettingsActivity extends BaseActivity {
             String username;
             UserRepository.getInstance().UpdateUsernameByEmail(email);
 
+            TextView emailView = findViewById(R.id.email_txtView);
+            emailView.setText(email);
+
+            uploadUserStats(email);
+
             storageRef = storage.getReferenceFromUrl("gs://twitter-c9248.appspot.com/images");
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             db.collection("User").orderBy("Email", Query.Direction.DESCENDING)
@@ -79,18 +86,7 @@ public class EditSettingsActivity extends BaseActivity {
                                     usernameTextView.setText(username);
                                     actualUsername = username;
                                     System.out.println("ACTUAL USERNAME " + actualUsername);
-
-
-                                    StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("myimage");
-
-
-                                    ImageView image = (ImageView)findViewById(R.id.imageView);
-
-                                    // Load the image using Glide
-                                    Glide.with(EditSettingsActivity.this.getApplicationContext())
-                                            .load(storageReference)
-                                            .into(image);
-
+                                    loadWithGlide(username);
                                 }
 
 
@@ -115,6 +111,62 @@ public class EditSettingsActivity extends BaseActivity {
         }
     }
 
+    private void uploadUserStats(String emailUserConnect) {
+        /*
+            Uploads UI with users stats
+         */
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("Tweet").orderBy("Date", Query.Direction.DESCENDING)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        int nbTweets = 0;
+                        int nbHashtags = 0;
+                        for (DocumentSnapshot doc : task.getResult())
+                        {
+
+
+                            if(doc.getString("Email").equals(emailUserConnect)){
+                                nbTweets++;
+
+                                String hashtags = doc.getString("Hashtags");
+                                int count = 0;
+
+                                for(int i=0; i < hashtags.length(); i++)
+                                {    if(hashtags.charAt(i) == ' ')
+                                    count++;
+                                }
+                                nbHashtags+=count;
+
+
+
+                            }
+
+
+
+                        }
+
+                        TextView nbTweetsT = findViewById(R.id.nb_tweets_uploaded);
+                        nbTweetsT.setText(String.valueOf(nbTweets));
+
+                        TextView nbHashtagsT = findViewById(R.id.nb_hashtags_used);
+                        nbHashtagsT.setText(String.valueOf(String.valueOf(nbHashtags)));
+
+
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(EditSettingsActivity.this,"fail on loading Statistics", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
     public void ChangeEmail (View o){
         /*
             Method that is called by the button to change the email in the settings activity
@@ -137,6 +189,35 @@ public class EditSettingsActivity extends BaseActivity {
 
 
     }
+
+    public void loadWithGlide(String username) {
+        // [START storage_load_with_glide]
+        // Reference to an image file in Cloud Storage
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference("images/"+username+".jpg");
+
+        // ImageView in your Activity
+        ImageView imageView = findViewById(R.id.profile_img);
+
+        // Download directly from StorageReference using Glide
+        // (See MyAppGlideModule for Loader registration)
+        storageRef.child(username+".jpg").getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                // Use the bytes to display the image
+
+                Bitmap bmp= BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+                imageView.setImageBitmap(bmp);
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+            }
+        });
+    }
+
+
 
     public void updateImage(View view) {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
