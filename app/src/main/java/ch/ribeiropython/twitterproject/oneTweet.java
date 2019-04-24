@@ -9,6 +9,7 @@ public class oneTweet {
     private String tweet;
     private String hashtag;
     private String idTweet;
+    private boolean isMyTweet;
 
     public String getPseudo() {
         return pseudo;
@@ -30,6 +31,12 @@ public class oneTweet {
             this.tweet = tweet.substring(0,119);
     }
 
+    public void setIdTweet(String idTweet) {  this.idTweet = idTweet; }
+
+    public boolean getIsMyTweet() {  return isMyTweet;   }
+
+    public void setIsMyTweet(boolean isMyTweet) {  this.isMyTweet = isMyTweet;  }
+
     public String getHashtag() {
         return hashtag;
     }
@@ -40,7 +47,7 @@ public class oneTweet {
         this.hashtag = hashtag;
     }
 
-    public oneTweet(String pseudo, String tweet, String hashtag) {
+    public oneTweet(String pseudo, String tweet, String hashtag, String idTweet, boolean isMyTweet) {
         this.pseudo = pseudo;
 
         if(tweet.length()<=120)
@@ -49,5 +56,7 @@ public class oneTweet {
             this.tweet = tweet.substring(0,119);
 
         this.hashtag = hashtag;
+        this.idTweet = idTweet;
+        this.isMyTweet=isMyTweet;
     }
 }

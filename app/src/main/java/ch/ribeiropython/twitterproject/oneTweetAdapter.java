@@ -1,6 +1,7 @@
 package ch.ribeiropython.twitterproject;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,32 +53,31 @@ public class oneTweetAdapter extends ArrayAdapter<oneTweet> {
         pseudo.setText(currentTweet.getPseudo());
 
 
-      /*  System.out.println("nick : " + user.nickname + " pseudo : " + currentTweet.getPseudo());
+      //  System.out.println("nick : " + user.nickname + " pseudo : " + currentTweet.getPseudo());
 
-        if(user.nickname!=null)
-            if(user.nickname.equals(currentTweet.getPseudo())) {
+        if(currentTweet.getIsMyTweet()) {
 
-                //pseudo.setTextColor(this.mContext.getResources().getColor(R.color.redColor));
-                TextView click = (TextView) listItem.findViewById(R.id.textView6);
-                click.setVisibility(View.VISIBLE);
+            //pseudo.setTextColor(this.mContext.getResources().getColor(R.color.redColor));
+            TextView click = (TextView) listItem.findViewById(R.id.textView6);
+            click.setVisibility(View.VISIBLE);
 
-                /*
-                Setting the on click listener only for the tweets that correspond to the user.
-                 */
-               /* listItem.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View arg0) {
-                        User user = User.getUserSession(oneTweetAdapter.this.getContext());
-                        Intent intent = new Intent(mContext, TweetModifyActivity.class);
-                        intent.putExtra(mContext.getString(R.string.Int_nickname), currentTweet.getPseudo());
-                        intent.putExtra(mContext.getString(R.string.Int_hashtags), currentTweet.getHashtag());
-                        intent.putExtra(mContext.getString(R.string.Int_tweet), currentTweet.getTweet());
-                        intent.putExtra(mContext.getString(R.string.Int_idTweet), currentTweet.getIdTweet());
+            /*
+            Setting the on click listener only for the tweets that correspond to the user.
+             */
+            listItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View arg0) {
+                    User user = User.getUserSession(oneTweetAdapter.this.getContext());
+                    Intent intent = new Intent(mContext, TweetModifyActivity.class);
+                    intent.putExtra(mContext.getString(R.string.Int_nickname), currentTweet.getPseudo());
+                    intent.putExtra(mContext.getString(R.string.Int_hashtags), currentTweet.getHashtag());
+                    intent.putExtra(mContext.getString(R.string.Int_tweet), currentTweet.getTweet());
+                    intent.putExtra(mContext.getString(R.string.Int_idTweet), currentTweet.getIdTweet());
 
-                        mContext.startActivity(intent);
-                    }
-                });
-            }*/
+                    mContext.startActivity(intent);
+                }
+            });
+        }
 
         return listItem;
     }
