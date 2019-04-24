@@ -14,15 +14,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import ch.ribeiropython.twitterproject.firebase.UserFb;
 
 public class subscription_part3_Activity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -89,7 +83,6 @@ public class subscription_part3_Activity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success
-                            FirebaseAuth.getInstance().signOut();
                             signUserIn(user);
 
 
@@ -114,22 +107,7 @@ public class subscription_part3_Activity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
 
-                            UserFb userFb = new UserFb(user.email, user.nickname);
-
-                            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("User");
-                            databaseReference.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    databaseReference.child(mAuth.getUid()).setValue(userFb);
-                                    Toast.makeText(subscription_part3_Activity.this, "Data inserted.",
-                                            Toast.LENGTH_SHORT).show();
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                }
-                            });
+                            System.out.println("User signed in !!!!");
 
 
                             runMainActivity();

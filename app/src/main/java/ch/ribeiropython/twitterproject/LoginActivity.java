@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("328264475000-e4nmfkd008dalpqr7or1ca7c5v3ftjdc.apps.googleusercontent.com")
+                .requestIdToken("328264475000-1cp50o4fqt3t43slvi288c4j5slmtnja.apps.googleusercontent.com")
                 .requestEmail()
                 .build();
 
@@ -128,8 +128,9 @@ public class LoginActivity extends AppCompatActivity {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             // Signed in successfully, show authenticated UI.
-            saveGoogleAccount(account);
             firebaseAuthWithGoogle(account);
+            saveGoogleAccount(account);
+
 
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
