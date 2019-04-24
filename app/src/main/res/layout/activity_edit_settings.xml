@@ -14,6 +14,7 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="8dp"
         android:text="Username"
+        android:gravity="center"
         android:textSize="26sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.009"
@@ -21,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/profile_img"
         android:layout_width="206dp"
         android:layout_height="179dp"
         android:layout_marginStart="8dp"
@@ -40,16 +41,17 @@
         android:layout_marginTop="12dp"
         android:layout_marginEnd="8dp"
         android:text="Change image"
+        android:onClick="updateImage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+        app:layout_constraintTop_toBottomOf="@+id/profile_img" />
 
     <Button
         android:id="@+id/change_settings_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="124dp"
+        android:layout_marginTop="176dp"
         android:layout_marginEnd="8dp"
         android:text="Update your information"
         app:layout_constraintEnd_toEndOf="parent"

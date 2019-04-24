@@ -1,21 +1,49 @@
 package ch.ribeiropython.twitterproject;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayOutputStream;
+
+import androidx.annotation.NonNull;
 import ch.ribeiropython.twitterproject.repository.UserRepository;
 
 public class EditSettingsActivity extends BaseActivity {
 
-
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
+    private StorageReference storageRef;
+    private String actualUsername = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_settings);
         updateUIWhenCreating();
+
+
+
+
     }
 
     private void updateUIWhenCreating(){
@@ -28,10 +56,62 @@ public class EditSettingsActivity extends BaseActivity {
 
             //Update views with data
             String username;
-            UserRepository.UpdateUsernameByEmail(email);
-            username = UserRepository.getActualUsername();
-            System.out.println("Username" + username);
-            usernameTextView.setText(username);
+            UserRepository.getInstance().UpdateUsernameByEmail(email);
+
+            storageRef = storage.getReferenceFromUrl("gs://twitter-c9248.appspot.com/images");
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            db.collection("User").orderBy("Email", Query.Direction.DESCENDING)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            String username = "";
+
+                            for (DocumentSnapshot doc : task.getResult())
+                            {
+                                System.out.println("===== Email : " + doc.getString("Email")+" - "+doc.getString("Nickname"));
+                                System.out.println("===== E to test : " + email);
+
+
+                                if(doc.getString("Email").equals(email)){
+                                    username = doc.getString("Nickname");
+                                    System.out.println("Username" + username);
+                                    usernameTextView.setText(username);
+                                    actualUsername = username;
+                                    System.out.println("ACTUAL USERNAME " + actualUsername);
+
+
+                                    StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("myimage");
+
+
+                                    ImageView image = (ImageView)findViewById(R.id.imageView);
+
+                                    // Load the image using Glide
+                                    Glide.with(EditSettingsActivity.this.getApplicationContext())
+                                            .load(storageReference)
+                                            .into(image);
+
+                                }
+
+
+                            }
+
+
+
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+
+                        }
+                    });
+
+
+
+
+
+
         }
     }
 
@@ -57,4 +137,64 @@ public class EditSettingsActivity extends BaseActivity {
 
 
     }
+
+    public void updateImage(View view) {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent,0);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent imageREturnedIntent){
+        super.onActivityResult(requestCode, resultCode, imageREturnedIntent);
+        ImageView img = findViewById(R.id.profile_img);
+
+        System.out.println("IM HERE : + " + requestCode);
+        switch (requestCode){
+            case 0:
+                Uri selectedImage = imageREturnedIntent.getData();
+                img.setImageURI(selectedImage);
+                uploadImageToFirebase();
+                break;
+            case 1:
+                Uri selectedImage2 = imageREturnedIntent.getData();
+                img.setImageURI(selectedImage2);
+                uploadImageToFirebase();
+                break;
+        }
+    }
+
+    private void uploadImageToFirebase() {
+
+        ImageView img = findViewById(R.id.profile_img);
+
+        img.setDrawingCacheEnabled(true);
+        img.buildDrawingCache();
+        Bitmap bitmap = img.getDrawingCache();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG,100,baos);
+        byte[] data = baos.toByteArray();
+        System.out.println("UPLOAD : ACTUAL USERNAME " + actualUsername);
+        StorageReference mountainsRef = storageRef.child(actualUsername+".jpg");
+        UploadTask uploadTask = mountainsRef.putBytes(data);
+
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                System.out.println("Image upload error");
+                Toast.makeText(EditSettingsActivity.this.getApplicationContext(),"Image upload error",Toast.LENGTH_LONG);
+
+            }
+        });
+
+        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                System.out.println("Image uploaded successfully");
+                Toast.makeText(EditSettingsActivity.this.getApplicationContext(),"Image successfully uploaded",Toast.LENGTH_LONG);
+            }
+        });
+
+    }
+
+
 }

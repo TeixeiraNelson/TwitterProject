@@ -32,7 +32,6 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 public class UserRepository {
 
     private static UserRepository instance;
-    private static String actualUsername;
 
     public static UserRepository getInstance() {
         if (instance == null) {
@@ -171,7 +170,7 @@ public class UserRepository {
         });
     }
 
-    public static void UpdateUsernameByEmail(String email){
+    public void UpdateUsernameByEmail(String email){
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("User").orderBy("Email", Query.Direction.DESCENDING)
@@ -179,14 +178,16 @@ public class UserRepository {
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        int nb=0;
+                        String username = "";
+
                         for (DocumentSnapshot doc : task.getResult())
                         {
                             System.out.println("===== Email : " + doc.getString("Email")+" - "+doc.getString("Nickname"));
                             System.out.println("===== E to test : " + email);
 
+
                             if(doc.getString("Email").equals(email)){
-                                actualUsername = doc.getString("Nickname");
+                                username = doc.getString("Nickname");
                             }
 
 
@@ -204,6 +205,5 @@ public class UserRepository {
                 });
     }
 
-    public static String getActualUsername(){return actualUsername;}
 
 }
