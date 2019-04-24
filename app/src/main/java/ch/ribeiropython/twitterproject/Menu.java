@@ -3,6 +3,7 @@ package ch.ribeiropython.twitterproject;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.SubMenu;
@@ -25,12 +26,11 @@ import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-public class Menu extends AppCompatActivity
+public class Menu extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener, android.view.Menu {
 
     private ListView listViewTweet;
@@ -111,6 +111,8 @@ public class Menu extends AppCompatActivity
 
         tweetsList = new ArrayList<>();
         listViewTweet = (ListView) findViewById(R.id.listViewTweet);
+        String emailUserConnect = TextUtils.isEmpty(this.getCurrentUser().getEmail()) ? getString(R.string.info_email) : this.getCurrentUser().getEmail();
+
 
         if (TweetByHastags==1)
         {
@@ -121,8 +123,14 @@ public class Menu extends AppCompatActivity
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             for (DocumentSnapshot doc : task.getResult())
                             {
-                                tweetsList.add(new oneTweet(doc.getString("Email"),doc.getString("Message") , doc.getString("Hastags")));
-                                System.out.println("===== Email"+doc.getString("Email")+"  "+doc.getString("Message")+"  "+doc.getString("Hastags"));
+                                boolean myTweet=false;
+
+                                if(doc.getString("Email").equals(emailUserConnect))
+                                    myTweet=true;
+
+                                tweetsList.add(new oneTweet(doc.getString("Email"),doc.getString("Message") , doc.getString("Hastags"),doc.getId(),myTweet));
+                                System.out.println("===== Email "+doc.getString("Email")+"  "+doc.getString("Message")+"  "+doc.getString("Hastags"));
+
                             }
                             mAdapter = new oneTweetAdapter(Menu.this,tweetsList);
                             listViewTweet.setAdapter(mAdapter);
@@ -144,8 +152,14 @@ public class Menu extends AppCompatActivity
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             for (DocumentSnapshot doc : task.getResult())
                             {
-                                tweetsList.add(new oneTweet(doc.getString("Email"),doc.getString("Message") , doc.getString("Hastags")));
+                                boolean myTweet=false;
+
+                                if(doc.getString("Email").equals(emailUserConnect))
+                                    myTweet=true;
+
+                                tweetsList.add(new oneTweet(doc.getString("Email"),doc.getString("Message") , doc.getString("Hastags"),doc.getId(),myTweet));
                                 System.out.println("===== Email"+doc.getString("Email")+"  "+doc.getString("Message")+"  "+doc.getString("Hastags"));
+                                System.out.println("===== ID -> "+doc.getId());
                             }
                             mAdapter = new oneTweetAdapter(Menu.this,tweetsList);
                             listViewTweet.setAdapter(mAdapter);
