@@ -76,9 +76,6 @@ public class TweetModifyActivity extends AppCompatActivity {
     }
 
     public void modifyTweet(View o){
-       // Intent intent = getIntent();
-        //Take the user of the session
-
 
         String newTweetMsg = tweet.getText().toString();
         String newHashtags = hashtags.getText().toString();
