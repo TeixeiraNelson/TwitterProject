@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +35,7 @@ public class EditSettingsActivity extends BaseActivity {
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference storageRef;
     private String actualUsername = "";
+    private String actualEmail = "";
 
 
 
@@ -44,6 +46,16 @@ public class EditSettingsActivity extends BaseActivity {
         updateUIWhenCreating();
 
 
+        Button btn = findViewById(R.id.change_settings_btn);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), UpdateInformationActivity.class);
+                intent.putExtra("Email",actualEmail);
+                intent.putExtra("Nickname",actualUsername);
+                startActivity(intent);
+            }
+        });
 
 
     }
@@ -63,6 +75,7 @@ public class EditSettingsActivity extends BaseActivity {
             TextView emailView = findViewById(R.id.email_txtView);
             emailView.setText(email);
 
+            actualEmail = email;
             uploadUserStats(email);
 
             storageRef = storage.getReferenceFromUrl("gs://twitter-c9248.appspot.com/images");

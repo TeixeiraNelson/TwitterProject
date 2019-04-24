@@ -36,8 +36,8 @@ Any use or reliance on any Content or materials posted via the Services or obtai
     <string name="invalid_passwd_length">Passwords must have at least 6 characters</string>
     <string name="invalid_nickname">Nickname already in use</string>
     <string name="valid_info">Valid information</string>
-    
-    
+
+
     <!-- Extra Intent String -->
     <string name="Int_nickname">nickname</string>
     <string name="Int_tweet">tweet</string>
