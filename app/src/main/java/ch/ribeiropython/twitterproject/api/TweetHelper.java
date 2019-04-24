@@ -12,6 +12,7 @@ public class TweetHelper {
     public static CollectionReference getAllTweet(){
         return FirebaseFirestore.getInstance().collection(COLLECTION_NAME);
     }
+
     public static Query getAllTweetbyDate(){
         return getAllTweet()
                 .orderBy("Date");
