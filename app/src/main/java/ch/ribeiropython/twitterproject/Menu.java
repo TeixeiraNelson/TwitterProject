@@ -36,6 +36,7 @@ public class Menu extends BaseActivity
     private ListView listViewTweet;
     private oneTweetAdapter mAdapter;
     /* TweetDatabaseDeux db; */
+    String pseudoFound;
     FirebaseFirestore db;
     ArrayList<oneTweet> tweetsList;
 
@@ -123,17 +124,44 @@ public class Menu extends BaseActivity
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             for (DocumentSnapshot doc : task.getResult())
                             {
-                                boolean myTweet=false;
+                                db.collection("User").orderBy("Email", Query.Direction.DESCENDING)
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                String username = "";
 
-                                if(doc.getString("Email").equals(emailUserConnect))
-                                    myTweet=true;
+                                                for (DocumentSnapshot doc2 : task.getResult())
+                                                {
 
-                                tweetsList.add(new oneTweet(doc.getString("Email"),doc.getString("Message") , doc.getString("Hastags"),doc.getId(),myTweet));
-                                System.out.println("===== Email "+doc.getString("Email")+"  "+doc.getString("Message")+"  "+doc.getString("Hastags"));
+                                                    if(doc2.getString("Email").equals(doc.getString("Email"))){
+                                                        username = doc2.getString("Nickname");
+                                                        boolean myTweet=false;
 
+                                                        if(doc.getString("Email").equals(emailUserConnect))
+                                                            myTweet=true;
+
+                                                        tweetsList.add(new oneTweet(username,doc.getString("Message") , doc.getString("Hastags"),doc.getId(),myTweet));
+                                                        System.out.println("===== Email"+doc.getString("Email")+"  "+doc.getString("Message")+"  "+doc.getString("Hastags"));
+                                                        System.out.println("===== pseudo recu "+username);
+
+
+                                                    }
+
+                                                }
+                                                mAdapter = new oneTweetAdapter(Menu.this,tweetsList);
+                                                listViewTweet.setAdapter(mAdapter);
+
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+
+                                            }
+                                        });
                             }
-                            mAdapter = new oneTweetAdapter(Menu.this,tweetsList);
-                            listViewTweet.setAdapter(mAdapter);
+
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -152,17 +180,44 @@ public class Menu extends BaseActivity
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             for (DocumentSnapshot doc : task.getResult())
                             {
-                                boolean myTweet=false;
+                                db.collection("User").orderBy("Email", Query.Direction.DESCENDING)
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                String username = "";
 
-                                if(doc.getString("Email").equals(emailUserConnect))
-                                    myTweet=true;
+                                                for (DocumentSnapshot doc2 : task.getResult())
+                                                {
 
-                                tweetsList.add(new oneTweet(doc.getString("Email"),doc.getString("Message") , doc.getString("Hastags"),doc.getId(),myTweet));
-                                System.out.println("===== Email"+doc.getString("Email")+"  "+doc.getString("Message")+"  "+doc.getString("Hastags"));
-                                System.out.println("===== ID -> "+doc.getId());
+                                                    if(doc2.getString("Email").equals(doc.getString("Email"))){
+                                                        username = doc2.getString("Nickname");
+                                                        boolean myTweet=false;
+
+                                                        if(doc.getString("Email").equals(emailUserConnect))
+                                                            myTweet=true;
+
+                                                        tweetsList.add(new oneTweet(username,doc.getString("Message") , doc.getString("Hastags"),doc.getId(),myTweet));
+                                                        System.out.println("===== Email"+doc.getString("Email")+"  "+doc.getString("Message")+"  "+doc.getString("Hastags"));
+                                                        System.out.println("===== pseudo recu "+username);
+
+
+                                                    }
+
+                                                }
+                                                mAdapter = new oneTweetAdapter(Menu.this,tweetsList);
+                                                listViewTweet.setAdapter(mAdapter);
+
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+
+                                            }
+                                        });
                             }
-                            mAdapter = new oneTweetAdapter(Menu.this,tweetsList);
-                            listViewTweet.setAdapter(mAdapter);
+
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -175,6 +230,40 @@ public class Menu extends BaseActivity
 
 
 
+    }
+
+    public String getPseudoWithEmail(String emailuser)
+    {
+        pseudoFound="";
+
+        db.collection("User").orderBy("Email", Query.Direction.DESCENDING)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                        for (DocumentSnapshot doc : task.getResult())
+                        {
+
+                            if(doc.getString("Email").equals(emailuser)){
+                                pseudoFound = doc.getString("Nickname");
+                                System.out.println("===== Pseudo trouvé ! "+pseudoFound);
+                            }
+
+                        }
+
+
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+
+        return pseudoFound;
     }
 
     // method to refresh the activity
