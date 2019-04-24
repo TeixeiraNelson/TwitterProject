@@ -11,9 +11,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -107,7 +113,30 @@ public class subscription_part3_Activity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
 
-                            System.out.println("User signed in !!!!");
+                            FirebaseFirestore db;
+                            db = FirebaseFirestore.getInstance();
+
+                            Map<String, Object> newUser = new HashMap<>();
+                            newUser.put("Email", user.email);
+                            newUser.put("Nickname",user.nickname);
+
+
+                            db.collection("User").document()
+                                    .set(newUser)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            System.out.println("User added to db.");
+
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            System.out.println("Adding user impossible.");
+
+                                        }
+                                    });
 
 
                             runMainActivity();

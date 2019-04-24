@@ -3,6 +3,8 @@ package ch.ribeiropython.twitterproject.repository;
 import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -11,6 +13,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
@@ -26,6 +32,7 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 public class UserRepository {
 
     private static UserRepository instance;
+    private static String actualUsername;
 
     public static UserRepository getInstance() {
         if (instance == null) {
@@ -163,5 +170,40 @@ public class UserRepository {
             }
         });
     }
+
+    public static void UpdateUsernameByEmail(String email){
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("User").orderBy("Email", Query.Direction.DESCENDING)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        int nb=0;
+                        for (DocumentSnapshot doc : task.getResult())
+                        {
+                            System.out.println("===== Email : " + doc.getString("Email")+" - "+doc.getString("Nickname"));
+                            System.out.println("===== E to test : " + email);
+
+                            if(doc.getString("Email").equals(email)){
+                                actualUsername = doc.getString("Nickname");
+                            }
+
+
+                        }
+
+
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+    }
+
+    public static String getActualUsername(){return actualUsername;}
 
 }

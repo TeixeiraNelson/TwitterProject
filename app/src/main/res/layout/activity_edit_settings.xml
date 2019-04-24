@@ -7,93 +7,54 @@
     tools:context=".EditSettingsActivity">
 
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:text="Modify your settings"
-        android:textSize="24sp"
+        android:id="@+id/txtUsername"
+        android:layout_width="192dp"
+        android:layout_height="66dp"
+        android:layout_marginStart="108dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="8dp"
+        android:text="Username"
+        android:textSize="26sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.009"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/txtUsername"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="31dp"
-        android:text="Username"
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="206dp"
+        android:layout_height="179dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-    <EditText
-        android:id="@+id/txtEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:ems="10"
-        android:inputType="textEmailAddress"
-        android:hint="Email"
-        app:layout_constraintStart_toStartOf="@+id/txtUsername"
-        app:layout_constraintTop_toBottomOf="@+id/txtUsername" />
+        app:layout_constraintTop_toBottomOf="@+id/txtUsername"
+        app:srcCompat="@drawable/twitter_bird" />
 
     <Button
-        android:id="@+id/btnChangeEmail"
-        android:layout_width="157dp"
+        android:id="@+id/change_img_btn"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="56dp"
-        android:hint="Change Email"
-        android:onClick="ChangeEmail"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="@+id/txtEmail"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
+        android:text="Change image"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtEmail" />
-
-    <EditText
-        android:id="@+id/txtOldPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="38dp"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:hint="Actual password"
-        app:layout_constraintEnd_toEndOf="@+id/txtEmail"
-        app:layout_constraintStart_toStartOf="@+id/btnChangeEmail"
-        app:layout_constraintTop_toBottomOf="@+id/btnChangeEmail" />
-
-    <EditText
-        android:id="@+id/txtNewPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="31dp"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:hint="New Password"
-        app:layout_constraintStart_toStartOf="@+id/txtOldPassword"
-        app:layout_constraintTop_toBottomOf="@+id/txtOldPassword" />
-
-    <EditText
-        android:id="@+id/txtNewPassword2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:hint="Retry new passwords"
-        app:layout_constraintStart_toStartOf="@+id/txtOldPassword"
-        app:layout_constraintTop_toBottomOf="@+id/txtNewPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
     <Button
-        android:id="@+id/btnChangePassword"
+        android:id="@+id/change_settings_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:text="Change password"
-        android:onClick="ChangePassword"
-        app:layout_constraintStart_toStartOf="@+id/txtNewPassword2"
-        app:layout_constraintTop_toBottomOf="@+id/txtNewPassword2" />
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="124dp"
+        android:layout_marginEnd="8dp"
+        android:text="Update your information"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.044"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/change_img_btn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
