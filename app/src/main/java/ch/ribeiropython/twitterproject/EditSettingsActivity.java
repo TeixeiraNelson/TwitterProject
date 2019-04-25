@@ -43,7 +43,22 @@ public class EditSettingsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_settings);
-        updateUIWhenCreating();
+
+        String extraEmail = getIntent().getStringExtra("Nickname");
+
+
+
+
+        if(extraEmail!=null){
+            getUserEmail(extraEmail);
+
+        } else {
+            String email = TextUtils.isEmpty(this.getCurrentUser().getEmail()) ? getString(R.string.info_email) : this.getCurrentUser().getEmail();
+            updateUIWhenCreating(email);
+        }
+
+
+
 
 
         Button btn = findViewById(R.id.change_settings_btn);
@@ -58,15 +73,58 @@ public class EditSettingsActivity extends BaseActivity {
         });
 
 
+
+
     }
 
-    private void updateUIWhenCreating(){
+    private void getUserEmail(String extraEmail) {
+
+        Button btn = findViewById(R.id.change_img_btn);
+        btn.setVisibility(View.GONE);
+        btn.setEnabled(false);
+
+        Button btn2 = findViewById(R.id.change_settings_btn);
+        btn2.setVisibility(View.GONE);
+        btn2.setEnabled(false);
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("User").orderBy("Email", Query.Direction.DESCENDING)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        String username = "";
+
+                        for (DocumentSnapshot doc : task.getResult())
+                        {
+
+                            if(doc.getString("Nickname").equals(extraEmail)){
+                                updateUIWhenCreating(doc.getString("Email"));
+                            }
+
+
+                        }
+
+
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+    }
+
+    private void updateUIWhenCreating(String email){
 
         if (this.getCurrentUser() != null){
             TextView usernameTextView = findViewById(R.id.txtUsername);
 
             //Get email & username from Firebase
-            String email = TextUtils.isEmpty(this.getCurrentUser().getEmail()) ? getString(R.string.info_email) : this.getCurrentUser().getEmail();
+
+
 
             //Update views with data
             String username;
@@ -148,6 +206,7 @@ public class EditSettingsActivity extends BaseActivity {
                                 String hashtags = doc.getString("Hashtags");
                                 int count = 0;
 
+                                if(hashtags!=null)
                                 for(int i=0; i < hashtags.length(); i++)
                                 {    if(hashtags.charAt(i) == ' ')
                                     count++;

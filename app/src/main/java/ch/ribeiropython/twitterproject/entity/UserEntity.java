@@ -22,9 +22,9 @@ public class UserEntity {
 
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
-        result.put("email", email);
+        result.put("Email", email);
         result.put("pass", pass);
-        result.put("nickname", nickname);
+        result.put("Nickname", nickname);
         return result;
     }
 

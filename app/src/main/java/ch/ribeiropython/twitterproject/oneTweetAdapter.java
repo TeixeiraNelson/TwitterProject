@@ -77,6 +77,15 @@ public class oneTweetAdapter extends ArrayAdapter<oneTweet> {
                     mContext.startActivity(intent);
                 }
             });
+        } else {
+            listItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intentMyAccount = new Intent(mContext, EditSettingsActivity.class);
+                    intentMyAccount.putExtra("Nickname",currentTweet.getPseudo());
+                    mContext.startActivity(intentMyAccount);
+                }
+            });
         }
 
         return listItem;
