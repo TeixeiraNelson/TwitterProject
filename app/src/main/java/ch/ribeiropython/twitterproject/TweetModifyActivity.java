@@ -12,6 +12,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import ch.ribeiropython.twitterproject.api.TweetHelper;
 
 public class TweetModifyActivity extends AppCompatActivity {
 
@@ -56,8 +57,8 @@ public class TweetModifyActivity extends AppCompatActivity {
 
     public void deleteTweet(View o){
 
-        db.collection("Tweet").document(idTweet)
-                .delete()
+
+        TweetHelper.deleteTweet(idTweet)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -81,8 +82,7 @@ public class TweetModifyActivity extends AppCompatActivity {
         String newHashtags = hashtags.getText().toString();
 
 
-        db.collection("Tweet").document(idTweet)
-                .update("Message",newTweetMsg,"Hastags",newHashtags)
+        TweetHelper.updateTweet(newTweetMsg,newHashtags,idTweet)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
